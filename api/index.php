@@ -13,16 +13,10 @@ use Slim\Container;
 use TrkLife\Config;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-
-// Slim configuration
-$slim_conf = array(
-    'settings' => array(
-        'displayErrorDetails' => Config::get('DisplayErrors'),
-    ),
-);
+use TrkLife\ErrorHandler;
 
 // DI Container
-$c = new Container($slim_conf);
+$c = new Container(array());
 
 // Add logging to DI Container
 $c['logger'] = function() {
@@ -35,6 +29,10 @@ $c['logger'] = function() {
 };
 
 $app = new App($c);
+
+// Replace Slim error handler
+unset($app->getContainer()['errorHandler']);
+new ErrorHandler($app);
 
 /**
  * Login route
