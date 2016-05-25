@@ -28,6 +28,27 @@ $c['logger'] = function() {
     return $logger;
 };
 
+//Override the default Not Found Handler
+$c['notFoundHandler'] = function ($c) {
+    return function ($request, $response) use ($c) {
+        return $c['response']
+            ->withStatus(404)
+            ->withHeader('Content-Type', 'text/html')
+            ->write('404 Not found');
+    };
+};
+
+// Override the default Not Allowed Handler
+$c['notAllowedHandler'] = function ($c) {
+    return function ($request, $response, $methods) use ($c) {
+        return $c['response']
+            ->withStatus(405)
+            ->withHeader('Allow', implode(', ', $methods))
+            ->withHeader('Content-type', 'text/html')
+            ->write('405 Method Not Allowed');
+    };
+};
+
 $app = new App($c);
 
 // Replace Slim error handler
