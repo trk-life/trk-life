@@ -3,6 +3,7 @@
 namespace TrkLife;
 
 use Exception;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class Config
@@ -81,7 +82,9 @@ class Config
 
         $config = Yaml::parse(file_get_contents($path));
 
-        static::load($config);
+        if (!empty($config)) {
+            static::load($config);
+        }
     }
 
     /**
