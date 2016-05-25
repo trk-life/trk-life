@@ -2,3 +2,5 @@
 /config/*
 !/config/bootstrap.php
 !/config/defaults.yml
+/tmp/
+!/tmp/logs/.gitkeep

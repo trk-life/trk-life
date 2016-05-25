@@ -1,3 +1,4 @@
 # TrkLife Default Configuration
 
 DisplayErrors: false
+LogLevel: notice
