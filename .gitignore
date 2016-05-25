@@ -1,1 +1,4 @@
 /vendor/
+/config/*
+!/config/bootstrap.php
+!/config/defaults.yml
