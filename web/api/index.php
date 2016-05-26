@@ -15,6 +15,8 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use TrkLife\ErrorHandler;
 use Psr7Middlewares\Middleware\TrailingSlash;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 
 // DI Container
 $c = new Container(array());
@@ -27,6 +29,20 @@ $c['logger'] = function () {
         Logger::toMonologLevel(Config::get('LogLevel'))
     ));
     return $logger;
+};
+
+// Add DB to DI Container
+$c['EntityManager'] = function () {
+    $conf = Setup::createAnnotationMetadataConfiguration(array(Config::get('AppDir') . '/src/Entity'));
+    $conn = array(
+        'driver'=> 'pdo_mysql',
+        'host'      => Config::get('Database.host'),
+        'port'      => Config::get('Database.port'),
+        'user'      => Config::get('Database.user'),
+        'password'  => Config::get('Database.password'),
+        'dbname'    => Config::get('Database.database')
+    );
+    return EntityManager::create($conn, $conf);
 };
 
 //Override the default Not Found Handler
@@ -62,6 +78,11 @@ new ErrorHandler($app);
 /**
  * Login route
  */
-$app->post('/login', '\TrkLife\Controller\UserController:login');
+$app->post('/users/login', '\TrkLife\Controller\UserController:login');
+
+/**
+ * Create user route
+ */
+$app->post('/users/create', '\TrkLife\Controller\UserController:create'); // TODO: auth
 
 $app->run();

@@ -5,6 +5,7 @@ namespace TrkLife\Controller;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Http\Response;
+use TrkLife\Entity\User;
 
 /**
  * Class UserController
@@ -59,6 +60,34 @@ class UserController
         return $response->withJson(array(
             'status' => 'success',
             'email' => $email
+        ));
+    }
+
+    /**
+     * Creates a new user
+     *
+     * @param ServerRequestInterface $request   The request object
+     * @param Response $response                The response object
+     * @return Response                         The response object
+     */
+    public function create(ServerRequestInterface $request, Response $response)
+    {
+        // TODO: proper implementation
+
+        $user = new User;
+        $user->setEmail('george@gawdev.co.uk');
+        $user->setPassword('password');
+        $user->setFirstName('George');
+        $user->setLastName('Webb');
+        $user->setStatus('active');
+
+        // Save the user
+        $this->c->EntityManager->persist($user);
+        $this->c->EntityManager->flush();
+
+        return $response->withJson(array(
+            'status' => 'success',
+            'user' => $user
         ));
     }
 }
