@@ -20,7 +20,7 @@ use Psr7Middlewares\Middleware\TrailingSlash;
 $c = new Container(array());
 
 // Add logging to DI Container
-$c['logger'] = function() {
+$c['logger'] = function () {
     $logger = new Logger('trk.life');
     $logger->pushHandler(new StreamHandler(
         Config::get('RootDir') . "/tmp/logs/app.log",
