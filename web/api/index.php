@@ -14,6 +14,7 @@ use TrkLife\Config;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use TrkLife\ErrorHandler;
+use Psr7Middlewares\Middleware\TrailingSlash;
 
 // DI Container
 $c = new Container(array());
@@ -50,6 +51,9 @@ $c['notAllowedHandler'] = function ($c) {
 };
 
 $app = new App($c);
+
+// Handle trailing slashes
+$app->add(new TrailingSlash(false));
 
 // Replace Slim error handler
 unset($app->getContainer()['errorHandler']);
