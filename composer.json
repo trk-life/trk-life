@@ -32,5 +32,8 @@
         "psr-4": {
             "TrkLife\\": "tests/phpunit/"
         }
+    },
+    "config": {
+        "vendor-dir": "app/vendor"
     }
 }

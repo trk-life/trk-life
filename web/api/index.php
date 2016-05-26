@@ -6,7 +6,7 @@
  * @author George Webb <george@webb.uno>
  */
 
-require_once dirname(__DIR__) . '/config/bootstrap.php';
+require_once dirname(dirname(__DIR__)) . '/app/config/bootstrap.php';
 
 use Slim\App;
 use Slim\Container;

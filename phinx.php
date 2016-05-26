@@ -6,7 +6,7 @@
  * @author George Webb <george@webb.uno>
  */
 
-require_once __DIR__ . '/config/bootstrap.php';
+require_once __DIR__ . '/app/config/bootstrap.php';
 
 use TrkLife\Config;
 

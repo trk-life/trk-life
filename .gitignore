@@ -1,6 +1,5 @@
-/vendor/
+/app/vendor/
 /config/*
-!/config/bootstrap.php
-!/config/defaults.yml
+!/config/.gitkeep
 /tmp/
 !/tmp/logs/.gitkeep

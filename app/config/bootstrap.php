@@ -15,7 +15,8 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use TrkLife\Config;
 
-Config::set('RootDir', dirname(__DIR__));
+Config::set('RootDir', dirname(dirname(__DIR__)));
+Config::set('AppDir', dirname(__DIR__));
 
 // Load default config
 Config::loadYaml(__DIR__ . '/defaults.yml');
