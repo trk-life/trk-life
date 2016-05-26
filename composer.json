@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "TrkLife\\": "src/"
+            "TrkLife\\": "app/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "TrkLife\\": "tests/phpunit/"
+            "TrkLife\\": "app/tests/phpunit/"
         }
     },
     "config": {
