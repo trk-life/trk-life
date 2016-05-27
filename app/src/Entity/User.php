@@ -2,6 +2,9 @@
 
 namespace TrkLife\Entity;
 
+use TrkLife\Exception\ValidationException;
+use TrkLife\Validator;
+
 /**
  * User entity
  *
@@ -171,6 +174,25 @@ class User extends Entity
     }
 
     /**
+     * Returns the entity's attributes
+     *
+     * @return array    The array of data
+     */
+    public function getAttributes()
+    {
+        return array(
+            'id' => $this->id,
+            'email' => $this->email,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'status' => $this->status,
+            'created' => $this->created,
+            'modified' => $this->modified
+            // TODO: role
+        );
+    }
+
+    /**
      * Hash password, uses bcrypt hashing algorithm
      *
      * @param $password
@@ -182,12 +204,75 @@ class User extends Entity
     }
 
     /**
+     * Checks a hashed password
+     *
+     * @param string $plaintext_password    The plaintext password to check
+     * @param string $hashed_password       The hashed password with algorithm and cost prefixed
+     * @return bool                         Whether or not the password is correct
+     */
+    public function checkPassword($plaintext_password, $hashed_password)
+    {
+        return password_verify($plaintext_password, $hashed_password);
+    }
+
+    /**
      * Validate the fields before persisting entity or updating entity
      *
      * @PrePersist @PreUpdate
      */
     public function validate()
     {
-        // TODO
+        $messages = array();
+
+        // ID
+        if (!Validator::validateField($this->id, 'intVal')) {
+            $messages[] = 'ID is invalid.';
+        }
+
+        // Email
+        if (!Validator::validateField($this->email, 'email', array('notEmpty' => array(), 'required' => true))) {
+            $messages[] = 'Email address is invalid.';
+        }
+
+        // Password TODO: Validate before hashing
+        if (!Validator::validateField($this->password, 'stringType', array(
+            'notEmpty' => array(),
+            'length' => array(8, null)
+        ))) {
+            $messages[] = 'Password must be at least 8 characters long.';
+        }
+
+        // First name
+        if (!Validator::validateField($this->first_name, 'stringType', array(
+            'notEmpty' => array(),
+            'length' => array(1, 35),
+            'required' => true
+        ))) {
+            $messages[] = 'First name is required.';
+        }
+
+        // Last name
+        if (!Validator::validateField($this->last_name, 'stringType', array(
+            'notEmpty' => array(),
+            'length' => array(1, 35),
+            'required' => true
+        ))) {
+            $messages[] = 'Last name is required.';
+        }
+
+        // TODO: role
+
+        // Status
+        if (!Validator::validateField($this->status, 'slug', array(
+            'notEmpty' => array(),
+            'length' => array(1, 20),
+            'required' => true
+        ))) {
+            $messages[] = 'Status is not valid.';
+        }
+
+        if (!empty($messages)) {
+            throw new ValidationException($messages);
+        }
     }
 }

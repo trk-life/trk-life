@@ -87,7 +87,7 @@ class UserController
 
         return $response->withJson(array(
             'status' => 'success',
-            'user' => $user
+            'user' => $user->getAttributes()
         ));
     }
 }
