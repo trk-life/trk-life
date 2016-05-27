@@ -176,7 +176,7 @@ class User extends Entity
     /**
      * Returns the entity's attributes
      *
-     * @return array    The array of data
+     * @return array    The array of attributes
      */
     public function getAttributes()
     {
@@ -218,7 +218,7 @@ class User extends Entity
     /**
      * Validate the fields before persisting entity or updating entity
      *
-     * @PrePersist @PreUpdate
+     * @throws ValidationException
      */
     public function validate()
     {

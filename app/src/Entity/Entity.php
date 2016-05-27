@@ -2,6 +2,8 @@
 
 namespace TrkLife\Entity;
 
+use TrkLife\Exception\ValidationException;
+
 /**
  * Class Entity
  *
@@ -13,7 +15,7 @@ namespace TrkLife\Entity;
  * @MappedSuperclass
  * @HasLifecycleCallbacks
  */
-class Entity
+abstract class Entity
 {
     /**
      * Created unix timestamp of the entity
@@ -64,14 +66,22 @@ class Entity
     }
 
     /**
+     * Returns the entity's attributes
+     *
+     * @return array    The array of attributes
+     */
+    abstract public function getAttributes();
+
+    /**
      * Called before persisting entity
      *
      * @PrePersist
      */
-    public function onPrePersist()
+    final public function onPrePersist()
     {
         $this->created = time();
         $this->modified = time();
+        $this->validate();
     }
 
     /**
@@ -79,8 +89,16 @@ class Entity
      *
      * @PreUpdate
      */
-    public function onPreUpdate()
+    final public function onPreUpdate()
     {
         $this->modified = time();
+        $this->validate();
     }
+
+    /**
+     * Validate the fields before persisting entity or updating entity
+     *
+     * @throws ValidationException
+     */
+    abstract public function validate();
 }

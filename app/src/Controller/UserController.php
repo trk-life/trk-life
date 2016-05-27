@@ -2,10 +2,12 @@
 
 namespace TrkLife\Controller;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Http\Response;
 use TrkLife\Entity\User;
+use TrkLife\Exception\ValidationException;
 
 /**
  * Class UserController
@@ -81,9 +83,21 @@ class UserController
         $user->setLastName('Webb');
         $user->setStatus('active');
 
-        // Save the user
-        $this->c->EntityManager->persist($user);
-        $this->c->EntityManager->flush();
+        try {
+            // Save the user
+            $this->c->EntityManager->persist($user);
+            $this->c->EntityManager->flush();
+        } catch (ValidationException $e) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'validation_messages' => $e->validation_messages
+            ));
+        } catch (UniqueConstraintViolationException $e) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'validation_messages' => array('Email address is already registered.')
+            ));
+        }
 
         return $response->withJson(array(
             'status' => 'success',
