@@ -1,4 +1,5 @@
-trk.angular.controllers.controller("trkAppController")
+trk.angular.controllers
     .controller("trkAppController", function($scope, Globals, Page) {
         var vm = this;
+        $scope.page = Page;
     });

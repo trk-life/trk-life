@@ -17,9 +17,23 @@ angular
         "ngRoute",
         "ngAnimate"
     ])
-    .config(function() {
-        // TODO -- Put routes here
-        // TODO -- Redirect to login if not authed
+    .config(function($routeProvider) {
+
+        // TODO -- redirect users if they're not logged in
+
+        $routeProvider
+            .when("/error", {
+                templateUrl: "partials/error.html"
+            })
+            .when("/login", {
+                templateUrl: "partials/account/login.html",
+                controller: "loginController",
+                controllerAs: "vm"
+            })
+            .when("/logout", {
+                templateUrl: "partials/account/logout.html",
+                controller: "logoutController"
+            });
     })
     .run(function() {
         // TODO

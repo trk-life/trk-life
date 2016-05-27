@@ -1,8 +1,11 @@
-<!DOCTYPE HTML>
-<html lang="en" ng-app="trk-app" ng-controller="trkAppController as app">
+<?php
+session_start();
+?><!DOCTYPE HTML>
+<html lang="en" ng-app="trkApp" ng-controller="trkAppController as app">
     <head>
-        <title ng-bind="Page.title()">Loading...</title>
-        <!-- load CSS here -->
+        <title ng-bind="page.title">Loading...</title>
+
+        <link rel="stylesheet" href="css/lib/bootstrap.css" />
     </head>
     <body>
         <header>

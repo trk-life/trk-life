@@ -1,6 +1,8 @@
 trk.angular.services
     .factory("Page", function() {
-        return {
-            title: "test 123"
+        var factory = {
+            title: "trk.life"
         };
+
+        return factory;
     });

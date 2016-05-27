@@ -12,11 +12,16 @@ class JsIncludes
 
         // Controllers
         "js/controllers/trkAppController.js",
+        "js/controllers/loginController.js",
+        "js/controllers/logoutController.js",
+        "js/controllers/accountController.js",
 
         // Directives
+        "js/directives/trkAutofocus.js",
 
         // Services
         "js/services/Globals.js",
+        "js/services/User.js",
         "js/services/Page.js"
     );
 
