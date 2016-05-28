@@ -25,6 +25,11 @@ angular
             .when("/error", {
                 templateUrl: "partials/error.html"
             })
+            .when("/", {
+                templateUrl: "partials/tracker/welcome.html",
+                controller: "welcomeController",
+                controllerAs: "vm"
+            })
             .when("/login", {
                 templateUrl: "partials/account/login.html",
                 controller: "loginController",

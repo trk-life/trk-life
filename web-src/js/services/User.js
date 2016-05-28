@@ -2,7 +2,8 @@ trk.angular.services
     .factory("User", function() {
         var factory = {
             isAuthenticated: isAuthenticated,
-            doLogin: doLogin
+            doLogin: doLogin,
+            name: "Joe"
         };
 
         return factory;

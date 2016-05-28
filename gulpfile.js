@@ -30,6 +30,7 @@ gulp.task('styles', function() {
             'web-src/css/main.css'
         ])
         .pipe(addsrc.prepend('node_modules/bootstrap/dist/css/bootstrap.css'))
+        .pipe(addsrc.prepend('node_modules/font-awesome/css/font-awesome.css'))
         .pipe(minifyCSS())
         .pipe(concat('style.css'))
         .pipe(gulp.dest('web/dist/css'));
@@ -41,6 +42,7 @@ gulp.task('styles', function() {
 gulp.task('fonts', function() {
     gulp.src([
             'node_modules/bootstrap/dist/fonts/*',
+            'node_modules/font-awesome/fonts/*',
             'web-src/fonts/*'
         ])
         .pipe(gulp.dest('web/dist/fonts'));

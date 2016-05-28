@@ -48409,6 +48409,11 @@ angular
             .when("/error", {
                 templateUrl: "partials/error.html"
             })
+            .when("/", {
+                templateUrl: "partials/tracker/welcome.html",
+                controller: "welcomeController",
+                controllerAs: "vm"
+            })
             .when("/login", {
                 templateUrl: "partials/account/login.html",
                 controller: "loginController",
@@ -48475,6 +48480,17 @@ trk.angular.controllers
     .controller("trkAppController", function($scope, Globals, Page) {
         var vm = this;
         $scope.page = Page;
+        $scope.authenticated = true;
+    });
+
+trk.angular.controllers
+    .controller("welcomeController", function($scope, User) {
+        var vm = this;
+
+        $scope.page.title = "Overview - trk.life";
+
+        vm.user = User;
+        vm.weekHours = 5;
     });
 
 /**
@@ -48514,7 +48530,8 @@ trk.angular.services
     .factory("User", function() {
         var factory = {
             isAuthenticated: isAuthenticated,
-            doLogin: doLogin
+            doLogin: doLogin,
+            name: "Joe"
         };
 
         return factory;

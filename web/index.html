@@ -7,7 +7,7 @@
     </head>
     <body>
         <header>
-            <ng-include src="'partials/header.html'" class="nav" />
+            <ng-include src="'partials/header.html'" ng-if="authenticated" />
         </header>
 
         <ng-view></ng-view>
