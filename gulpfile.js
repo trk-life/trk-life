@@ -9,11 +9,15 @@ var gulp = require('gulp'),
  */
 gulp.task('scripts', function() {
     gulp.src([
+            'node_modules/angular/angular.js',
+            'node_modules/angular-route/angular-route.js',
+            'node_modules/angular-animate/angular-animate.js',
             'node_modules/jquery/dist/jquery.js',
             'node_modules/bootstrap/dist/js/bootstrap.js',
             'web-src/js/**/*.js'
         ])
-        .pipe(uglify())
+        // NOTE disable uglify as it breaks angular
+        //.pipe(uglify())
         .pipe(concat('script.js'))
         .pipe(gulp.dest('web/dist/js'));
 });
