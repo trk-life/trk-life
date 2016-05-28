@@ -17,6 +17,7 @@ use TrkLife\ErrorHandler;
 use Psr7Middlewares\Middleware\TrailingSlash;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
+use TrkLife\Auth\AuthMiddleware;
 
 // DI Container
 $c = new Container(array());
@@ -75,6 +76,9 @@ $app->add(new TrailingSlash(false));
 unset($app->getContainer()['errorHandler']);
 new ErrorHandler($app);
 
+// Init auth middleware
+$auth = new AuthMiddleware($c);
+
 /**
  * Login route
  */
@@ -83,6 +87,6 @@ $app->post('/users/login', '\TrkLife\Controller\UserController:login');
 /**
  * Create user route
  */
-$app->post('/users/create', '\TrkLife\Controller\UserController:create'); // TODO: auth
+$app->post('/users/create', '\TrkLife\Controller\UserController:create')->add($auth);
 
 $app->run();
