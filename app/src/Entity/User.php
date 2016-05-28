@@ -16,6 +16,16 @@ use TrkLife\Validator;
 class User extends Entity
 {
     /**
+     * Admin role
+     */
+    const ROLE_ADMIN = 'admin';
+
+    /**
+     * User role
+     */
+    const ROLE_USER = 'user';
+
+    /**
      * Active status
      */
     const STATUS_ACTIVE = 'active';
@@ -68,14 +78,20 @@ class User extends Entity
     private $last_name;
 
     /**
+     * User's role
+     *
+     * @Column(type="string")
+     * @var string
+     */
+    private $role;
+
+    /**
      * User's status: active or disabled
      *
      * @Column(type="string")
      * @var string
      */
     private $status;
-
-    // TODO: role
 
     /**
      * @return int User's ID
@@ -158,6 +174,22 @@ class User extends Entity
     }
 
     /**
+     * @return string   User's role
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role  User's role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    /**
      * @return string   User's status (active, disabled)
      */
     public function getStatus()
@@ -185,10 +217,10 @@ class User extends Entity
             'email' => $this->email,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
+            'role' => $this->role,
             'status' => $this->status,
             'created' => $this->created,
             'modified' => $this->modified
-            // TODO: role
         );
     }
 
@@ -260,7 +292,14 @@ class User extends Entity
             $messages[] = 'Last name is required.';
         }
 
-        // TODO: role
+        // Role
+        if (!Validator::validateField($this->role, 'stringType', array(
+            'notEmpty' => array(),
+            'length' => array(1, 35),
+            'required' => true
+        ))) {
+            $messages[] = 'Role is required.';
+        }
 
         // Status
         if (!Validator::validateField($this->status, 'slug', array(

@@ -81,6 +81,7 @@ class UserController
         $user->setPassword('password');
         $user->setFirstName('George');
         $user->setLastName('Webb');
+        $user->setRole('admin');
         $user->setStatus('active');
 
         try {

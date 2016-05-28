@@ -12,7 +12,7 @@ use TrkLife\Config;
 
 return array(
     'paths' => array(
-        'migrations' => '%%PHINX_CONFIG_DIR%%/db/migrations'
+        'migrations' => '%%PHINX_CONFIG_DIR%%/app/db/migrations'
     ),
     'environments' => array(
         'default_migration_table' => 'phinxlog',
