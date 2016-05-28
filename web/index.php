@@ -1,6 +1,4 @@
-<?php
-session_start();
-?><!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html lang="en" ng-app="trkApp" ng-controller="trkAppController as app">
     <head>
         <title ng-bind="page.title">Loading...</title>
@@ -18,6 +16,6 @@ session_start();
             <ng-include src="'partials/footer.html'" />
         </footer>
 
-<?php include "include_js.php" ?>
+        <script src="dist/scripts.js"></script>
     </body>
 </html>

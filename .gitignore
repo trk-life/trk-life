@@ -3,3 +3,4 @@
 !/config/.gitkeep
 /tmp/
 !/tmp/logs/.gitkeep
+/node_modules/

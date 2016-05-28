@@ -1,0 +1,14 @@
+{
+    "name": "trk-life",
+    "license": "MIT",
+    "dependencies": {
+        "bootstrap": "^3.3.6",
+        "angular": "^1.5.6",
+        "gulp": "^3.3.6",
+        "gulp-add-src": "^0.2.0",
+        "gulp-concat": "^2.6.0",
+        "gulp-clean-css": "^2.0.8",
+        "gulp-uglify": "^1.5.3",
+        "jquery": "^2.2.1"
+    }
+}
