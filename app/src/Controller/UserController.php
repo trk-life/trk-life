@@ -78,7 +78,12 @@ class UserController
 
         $user = new User;
         $user->setEmail('george@gawdev.co.uk');
-        $user->setPassword('password');
+        if (!$user->setPassword('password')) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'validation_messages' => array('Password must be at least 8 characters long.')
+            ));
+        }
         $user->setFirstName('George');
         $user->setLastName('Webb');
         $user->setRole('admin');

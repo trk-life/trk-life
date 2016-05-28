@@ -135,10 +135,16 @@ class User extends Entity
 
     /**
      * @param string $password  User's hashed password
+     * @return bool             If the password was validated successfully
      */
     public function setPassword($password)
     {
+        // Do password strength validation now, as we are hashing it
+        if (!Validator::validateField($password, 'stringType', array('length' => array(8, null)))) {
+            return false;
+        }
         $this->password = $this->hashPassword($password);
+        return true;
     }
 
     /**
@@ -266,12 +272,9 @@ class User extends Entity
             $messages[] = 'Email address is invalid.';
         }
 
-        // Password TODO: Validate before hashing
-        if (!Validator::validateField($this->password, 'stringType', array(
-            'notEmpty' => array(),
-            'length' => array(8, null)
-        ))) {
-            $messages[] = 'Password must be at least 8 characters long.';
+        // Password - strength is already validated
+        if (!Validator::validateField($this->password, 'stringType', array('notEmpty' => array()))) {
+            $messages[] = 'Password is invalid.';
         }
 
         // First name
