@@ -1,0 +1,11 @@
+# TrkLife Default Configuration
+
+LogLevel: notice
+
+Database:
+  host: 127.0.0.1
+  port: 3306
+  user: Null
+  password: Null
+  database: trk_life
+  testDatabase: trk_life_test

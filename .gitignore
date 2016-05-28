@@ -1,0 +1,5 @@
+/app/vendor/
+/config/*
+!/config/.gitkeep
+/tmp/
+!/tmp/logs/.gitkeep
