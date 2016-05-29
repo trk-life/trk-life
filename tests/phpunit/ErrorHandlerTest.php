@@ -7,6 +7,12 @@ use Monolog\Logger;
 use Slim\App;
 use Slim\Container;
 
+/**
+ * Class ErrorHandlerTest
+ *
+ * @package TrkLife
+ * @author George Webb <george@webb.uno>
+ */
 class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
