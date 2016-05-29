@@ -97,6 +97,13 @@ class ErrorHandler
         error_reporting(0);
         $this->app = $app;
         $this->c = $app->getContainer();
+    }
+
+    /**
+     * Registers error handler, fatal error handler and exception handler
+     */
+    public function register()
+    {
         $this->registerErrorHandler();
         $this->registerExceptionHandler();
         $this->registerFatalHandler();

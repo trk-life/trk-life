@@ -74,7 +74,8 @@ $app->add(new TrailingSlash(false));
 
 // Replace Slim error handler
 unset($app->getContainer()['errorHandler']);
-new ErrorHandler($app);
+$error_handler = new ErrorHandler($app);
+$error_handler->register();
 
 // Init auth middleware
 $auth = new AuthMiddleware($c);
