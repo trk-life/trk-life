@@ -25,7 +25,8 @@ class ValidationException extends Exception
      *
      * @param array $validation_messages    List of validation messages
      */
-    public function __construct($validation_messages = array()) {
+    public function __construct($validation_messages = array())
+    {
         $this->validation_messages = $validation_messages;
     }
 }
