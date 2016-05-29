@@ -94,16 +94,18 @@ class ErrorHandler
      */
     public function __construct(App $app)
     {
-        error_reporting(0);
         $this->app = $app;
         $this->c = $app->getContainer();
     }
 
     /**
      * Registers error handler, fatal error handler and exception handler
+     *
+     * @codeCoverageIgnore
      */
     public function register()
     {
+        error_reporting(0);
         $this->registerErrorHandler();
         $this->registerExceptionHandler();
         $this->registerFatalHandler();
@@ -111,6 +113,8 @@ class ErrorHandler
 
     /**
      * Register error handler
+     *
+     * @codeCoverageIgnore
      */
     public function registerErrorHandler()
     {
@@ -119,6 +123,8 @@ class ErrorHandler
 
     /**
      * Register exception handler
+     *
+     * @codeCoverageIgnore
      */
     public function registerExceptionHandler()
     {
@@ -127,6 +133,8 @@ class ErrorHandler
 
     /**
      * Register fatal error handler
+     *
+     * @codeCoverageIgnore
      */
     public function registerFatalHandler()
     {
@@ -187,6 +195,8 @@ class ErrorHandler
 
     /**
      * Handles a fatal error
+     *
+     * @codeCoverageIgnore
      */
     public function handleFatalError()
     {
