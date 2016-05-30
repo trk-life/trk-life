@@ -6,6 +6,7 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Http\Response;
+use TrkLife\Entity\Token;
 use TrkLife\Entity\User;
 use TrkLife\Exception\ValidationException;
 
@@ -84,12 +85,30 @@ class UserController
         $expires = $stay_logged_in ? 60 * 60 * 24 * 90 : 60 * 60 * 24;
 
         // Create token
-        // TODO
+        $token_entity = new Token();
+        $token = $token_entity->generateToken();
+
+        $token_entity->setUserId($user->getId());
+        $token_entity->setToken($token);
+        $token_entity->setExpiresAfter($expires);
+        $token_entity->setLastAccessed((new \DateTime())->getTimestamp());
+        $token_entity->setUserAgent(empty($_SERVER['HTTP_USER_AGENT']) ? '' : $_SERVER['HTTP_USER_AGENT']);
+
+        try {
+            // Save the token
+            $this->c->EntityManager->persist($token_entity);
+            $this->c->EntityManager->flush();
+        } catch (\Exception $e) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'There was a problem logging in, please try again later.'
+            ));
+        }
 
         return $response->withJson(array(
             'status' => 'success',
             'user' => $user->getAttributes(),
-            'token' => 'token' // TODO
+            'token' => $token
         ));
     }
 

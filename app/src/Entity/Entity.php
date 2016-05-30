@@ -81,6 +81,7 @@ abstract class Entity
     {
         $this->created = time();
         $this->modified = time();
+        $this->prePersistHook();
         $this->validate();
     }
 
@@ -92,7 +93,24 @@ abstract class Entity
     final public function onPreUpdate()
     {
         $this->modified = time();
+        $this->preUpdateHook();
         $this->validate();
+    }
+
+    /**
+     * Called pre-persisting
+     */
+    protected function prePersistHook()
+    {
+        // Overridden in entity where necessary
+    }
+
+    /**
+     * Called pre-update
+     */
+    protected function preUpdateHook()
+    {
+        // Overridden in entity where necessary
     }
 
     /**
