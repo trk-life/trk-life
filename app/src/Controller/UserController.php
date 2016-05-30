@@ -113,6 +113,41 @@ class UserController
     }
 
     /**
+     * Checks a token is still valid
+     *
+     * @param ServerRequestInterface $request   The request object
+     * @param Response $response                The response object
+     * @return Response                         The response object
+     */
+    public function validateToken(ServerRequestInterface $request, Response $response)
+    {
+        return $response->withJson(array(
+            'status' => 'success',
+            'message' => 'Token is valid',
+            'user' => $request->getAttribute('user')->getAttributes()
+        ));
+    }
+
+    /**
+     * Logs out the current user
+     *
+     * @param ServerRequestInterface $request   The request object
+     * @param Response $response                The response object
+     * @return Response                         The response object
+     */
+    public function logout(ServerRequestInterface $request, Response $response)
+    {
+        // Delete token from database
+        $this->c->EntityManager->remove($request->getAttribute('token_entity'));
+        $this->c->EntityManager->flush();
+
+        return $response->withJson(array(
+            'status' => 'success',
+            'message' => 'Successfully logged out.'
+        ));
+    }
+
+    /**
      * Creates a new user
      *
      * @param ServerRequestInterface $request   The request object

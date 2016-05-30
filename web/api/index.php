@@ -85,17 +85,17 @@ $auth = new AuthMiddleware($c);
  */
 $app->post('/users/login', '\TrkLife\Controller\UserController:login');
 $app->get('/users/validate-token', '\TrkLife\Controller\UserController:validateToken')->add($auth);
-$app->get('/users/logout', '\TrkLife\Controller\UserController:logout');
-$app->post('/users/forgotten-password', '\TrkLife\Controller\UserController:forgottenPassword');
-$app->post('/users/reset-password', '\TrkLife\Controller\UserController:resetPassword');
+$app->get('/users/logout', '\TrkLife\Controller\UserController:logout')->add($auth);
+$app->post('/users/forgotten-password', '\TrkLife\Controller\UserController:forgottenPassword'); // TODO
+$app->post('/users/reset-password', '\TrkLife\Controller\UserController:resetPassword'); // TODO
 
 /**
  * User management routes
  */
-$app->get('/users/get/{id}', '\TrkLife\Controller\UserController:get')->add($auth);
-$app->get('/users/list', '\TrkLife\Controller\UserController:list')->add($auth);
-$app->post('/users/create', '\TrkLife\Controller\UserController:create')->add($auth);
-$app->post('/users/update/{id}', '\TrkLife\Controller\UserController:update')->add($auth);
-$app->post('/users/delete/{id}', '\TrkLife\Controller\UserController:delete')->add($auth);
+$app->get('/users/get/{id}', '\TrkLife\Controller\UserController:get')->add($auth); // TODO
+$app->get('/users/list', '\TrkLife\Controller\UserController:list')->add($auth); // TODO
+$app->post('/users/create', '\TrkLife\Controller\UserController:create')->add($auth); // TODO
+$app->post('/users/update/{id}', '\TrkLife\Controller\UserController:update')->add($auth); // TODO
+$app->post('/users/delete/{id}', '\TrkLife\Controller\UserController:delete')->add($auth); // TODO
 
 $app->run();
