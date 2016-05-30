@@ -50,6 +50,7 @@ class UserController
         // Get and check email and password
         $email = filter_var(empty($data['email']) ? '' : $data['email'], FILTER_SANITIZE_EMAIL);
         $password = filter_var(empty($data['password']) ? '' : $data['password'], FILTER_SANITIZE_STRING);
+        $stay_logged_in = filter_var(empty($data['stay_logged_in']) ? 0 : $data['stay_logged_in'], FILTER_SANITIZE_NUMBER_INT);
         if (empty($email) || empty($password)) {
             return $response->withJson(array(
                 'status' => 'fail',
@@ -57,11 +58,38 @@ class UserController
             ));
         }
 
-        // TODO: login logic
+        // Get user from DB
+        $user_repository = $this->c->EntityManager->getRepository('TrkLife\Entity\User');
+        $user = $user_repository->findOneByEmail($email);
+
+        // Check user exists and email is correct
+        if ($user === null || !$user->checkPassword($password)) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'A user with this email and password cannot be found.'
+            ));
+        }
+
+        // Check user is active
+        if ($user->getStatus() != User::STATUS_ACTIVE) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'This user is currently disabled.'
+            ));
+        }
+
+        // TODO: rate limiting, save login attempt - consider UserRepository class
+
+        // Expiry time - 1 day normal, 90 days if stay logged in.
+        $expires = $stay_logged_in ? 60 * 60 * 24 * 90 : 60 * 60 * 24;
+
+        // Create token
+        // TODO
 
         return $response->withJson(array(
             'status' => 'success',
-            'email' => $email
+            'user' => $user->getAttributes(),
+            'token' => 'token' // TODO
         ));
     }
 
@@ -77,7 +105,7 @@ class UserController
         // TODO: proper implementation
 
         $user = new User;
-        $user->setEmail('george@gawdev.co.uk');
+        $user->setEmail('george@webb.uno');
         if (!$user->setPassword('password')) {
             return $response->withJson(array(
                 'status' => 'fail',

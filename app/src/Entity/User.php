@@ -242,15 +242,14 @@ class User extends Entity
     }
 
     /**
-     * Checks a hashed password
+     * Checks a password against the hashed password
      *
      * @param string $plaintext_password    The plaintext password to check
-     * @param string $hashed_password       The hashed password with algorithm and cost prefixed
      * @return bool                         Whether or not the password is correct
      */
-    public function checkPassword($plaintext_password, $hashed_password)
+    public function checkPassword($plaintext_password)
     {
-        return password_verify($plaintext_password, $hashed_password);
+        return password_verify($plaintext_password, $this->password);
     }
 
     /**

@@ -24,6 +24,7 @@ class ValidationException extends Exception
      * ValidationException constructor.
      *
      * @param array $validation_messages    List of validation messages
+     * @codeCoverageIgnore
      */
     public function __construct($validation_messages = array())
     {
