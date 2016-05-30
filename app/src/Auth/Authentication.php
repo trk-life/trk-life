@@ -31,11 +31,27 @@ class Authentication
      * Authenticates the request
      *
      * @param ServerRequestInterface $request
-     * @return bool
+     * @return bool | ServerRequestInterface    False on failure, request on success
      */
     public function authenticate(ServerRequestInterface $request)
     {
-        // TODO
-        return true;
+        $token = str_replace('Bearer ', '', array_pop($request->getHeader('Authorization')));
+
+        if (empty($token)) {
+            return false;
+        }
+
+        $token_repo = $this->c->EntityManager->getRepository('TrkLife\Entity\Token');
+        $token_entity = $token_repo->findOneByToken($token);
+
+        if ($token_entity === null) {
+            return false;
+        }
+
+        // Set user and token in request attribute
+        $user_repository = $this->c->EntityManager->getRepository('TrkLife\Entity\User');
+        $request = $request->withAttribute('user', $user_repository->findOneById($token_entity->getUserId()));
+
+        return $request;
     }
 }

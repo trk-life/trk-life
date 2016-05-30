@@ -11,7 +11,8 @@ use TrkLife\Validator;
  * @package TrkLife\Entity
  * @author George Webb <george@webb.uno>
  *
- * @Entity @Table(name="user_tokens")
+ * @Entity(repositoryClass="TrkLife\Entity\TokenRepository")
+ * @Table(name="user_tokens")
  */
 class Token extends Entity
 {
@@ -112,7 +113,7 @@ class Token extends Entity
      */
     public function setToken($token)
     {
-        $this->token = $this->hashToken($token);
+        $this->token = static::hashToken($token);
     }
 
     /**
@@ -169,7 +170,7 @@ class Token extends Entity
      * @param string $token The token to hash
      * @return string       The sha256 hashed token
      */
-    public function hashToken($token)
+    public static function hashToken($token)
     {
         return hash('sha256', $token);
     }

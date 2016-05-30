@@ -31,11 +31,11 @@ class Authorisation
      * Authorises a request, ensuring that the user's role is sufficient
      *
      * @param ServerRequestInterface $request
-     * @return bool
+     * @return bool | ServerRequestInterface    False on failure, request on success
      */
     public function authorise(ServerRequestInterface $request)
     {
         // TODO
-        return true;
+        return $request;
     }
 }

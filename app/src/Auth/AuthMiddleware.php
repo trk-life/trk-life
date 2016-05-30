@@ -41,21 +41,25 @@ class AuthMiddleware
     {
         // Authentication
         $authentication = new Authentication($this->c);
-        if (!$authentication->authenticate($request)) {
+        $result = $authentication->authenticate($request);
+        if ($result === false) {
             // Not authenticated
             return $response
                 ->withStatus(401)
                 ->withJson(json_encode("401 Unauthorized"));
         }
+        $request = $result;
 
         // Authorisation
         $authorisation = new Authorisation($this->c);
-        if (!$authorisation->authorise($request)) {
+        $result = $authorisation->authorise($request);
+        if ($result === false) {
             // Not authorised
             return $response
                 ->withStatus(403)
                 ->withJson(json_encode("403 Unauthorized"));
         }
+        $request = $result;
 
         return $next($request, $response);
     }
