@@ -35,7 +35,8 @@ class Authentication
      */
     public function authenticate(ServerRequestInterface $request)
     {
-        $token = str_replace('Bearer ', '', array_pop($request->getHeader('Authorization')));
+        $auth_header = $request->getHeader('Authorization');
+        $token = str_replace('Bearer ', '', (is_array($auth_header) ? array_pop($auth_header) : $auth_header));
 
         if (empty($token)) {
             return false;
