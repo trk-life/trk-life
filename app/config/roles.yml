@@ -1,0 +1,17 @@
+#########################
+# Roles and Permissions #
+#########################
+
+# The role with every permission
+admin:
+  - \TrkLife\Controller\UserController:validateToken:GET
+  - \TrkLife\Controller\UserController:logout:GET
+  - \TrkLife\Controller\UserController:get:GET
+  - \TrkLife\Controller\UserController:list:GET
+  - \TrkLife\Controller\UserController:create:POST
+  - \TrkLife\Controller\UserController:update:POST
+  - \TrkLife\Controller\UserController:delete:POST
+
+user:
+  - \TrkLife\Controller\UserController:validateToken:GET
+  - \TrkLife\Controller\UserController:logout:GET
