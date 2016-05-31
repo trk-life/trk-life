@@ -9,3 +9,17 @@ Database:
   password: Null
   database: trk_life
   testDatabase: trk_life_test
+
+Email:
+  from_address: null
+  from_name: null
+  smtp:
+    host: localhost
+    port: 25
+    use_auth: false
+    username: null
+    password: null
+    tls_or_ssl: ''
+  types:
+    forgotten_password:
+      subject: Reset your trk.life password

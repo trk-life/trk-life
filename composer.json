@@ -20,7 +20,9 @@
         "monolog/monolog": "^1.19",
         "oscarotero/psr7-middlewares": "^3.15",
         "doctrine/orm": "^2.5",
-        "respect/validation": "^1.1"
+        "respect/validation": "^1.1",
+        "phpmailer/phpmailer": "^5.2",
+        "league/plates": "^3.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^4",
