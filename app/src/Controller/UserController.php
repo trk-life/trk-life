@@ -2,13 +2,11 @@
 
 namespace TrkLife\Controller;
 
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Http\Response;
 use TrkLife\Entity\Token;
 use TrkLife\Entity\User;
-use TrkLife\Exception\ValidationException;
 
 /**
  * Class UserController
@@ -144,52 +142,6 @@ class UserController
         return $response->withJson(array(
             'status' => 'success',
             'message' => 'Successfully logged out.'
-        ));
-    }
-
-    /**
-     * Creates a new user
-     *
-     * @param ServerRequestInterface $request   The request object
-     * @param Response $response                The response object
-     * @return Response                         The response object
-     */
-    public function create(ServerRequestInterface $request, Response $response)
-    {
-        // TODO: proper implementation
-
-        $user = new User;
-        $user->setEmail('george@webb.uno');
-        if (!$user->setPassword('password')) {
-            return $response->withJson(array(
-                'status' => 'fail',
-                'validation_messages' => array('Password must be at least 8 characters long.')
-            ));
-        }
-        $user->setFirstName('George');
-        $user->setLastName('Webb');
-        $user->setRole('admin');
-        $user->setStatus('active');
-
-        try {
-            // Save the user
-            $this->c->EntityManager->persist($user);
-            $this->c->EntityManager->flush();
-        } catch (ValidationException $e) {
-            return $response->withJson(array(
-                'status' => 'fail',
-                'validation_messages' => $e->validation_messages
-            ));
-        } catch (UniqueConstraintViolationException $e) {
-            return $response->withJson(array(
-                'status' => 'fail',
-                'validation_messages' => array('Email address is already registered.')
-            ));
-        }
-
-        return $response->withJson(array(
-            'status' => 'success',
-            'user' => $user->getAttributes()
         ));
     }
 }

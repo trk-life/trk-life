@@ -1,0 +1,51 @@
+#!/usr/bin/env php
+<?php
+/**
+ * trk.life command-line
+ *
+ * Entry points for command-line tools for trk.life
+ *
+ * @author George Webb <george@webb.uno>
+ */
+
+require __DIR__ . '/app/config/bootstrap.php';
+
+use TrkLife\Console\CreateUserCommand;
+use Symfony\Component\Console\Application;
+use Slim\Container;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use TrkLife\Config;
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+
+// DI Container
+$c = new Container();
+
+// Add logging to DI Container
+$c['logger'] = function () {
+    $logger = new Logger('trk.life');
+    $logger->pushHandler(new StreamHandler(
+        Config::get('RootDir') . "/tmp/logs/app.log",
+        Logger::toMonologLevel(Config::get('LogLevel'))
+    ));
+    return $logger;
+};
+
+// Add DB to DI Container
+$c['EntityManager'] = function () {
+    $conf = Setup::createAnnotationMetadataConfiguration(array(Config::get('AppDir') . '/src/Entity'));
+    $conn = array(
+        'driver'=> 'pdo_mysql',
+        'host'      => Config::get('Database.host'),
+        'port'      => Config::get('Database.port'),
+        'user'      => Config::get('Database.user'),
+        'password'  => Config::get('Database.password'),
+        'dbname'    => Config::get('Database.database')
+    );
+    return EntityManager::create($conn, $conf);
+};
+
+$application = new Application();
+$application->add(new CreateUserCommand('user:create', $c));
+$application->run();
