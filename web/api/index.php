@@ -15,6 +15,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use TrkLife\ErrorHandler;
 use Psr7Middlewares\Middleware\TrailingSlash;
+use RKA\Middleware\IpAddress;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use TrkLife\Auth\AuthMiddleware;
@@ -69,8 +70,9 @@ $c['notAllowedHandler'] = function ($c) {
 
 $app = new App($c);
 
-// Handle trailing slashes
+// Add app-wide middleware
 $app->add(new TrailingSlash(false));
+$app->add(new IpAddress(true));
 
 // Replace Slim error handler
 unset($app->getContainer()['errorHandler']);
@@ -86,7 +88,7 @@ $auth = new AuthMiddleware($c);
 $app->post('/users/login', '\TrkLife\Controller\UserController:login');
 $app->get('/users/validate-token', '\TrkLife\Controller\UserController:validateToken')->add($auth);
 $app->get('/users/logout', '\TrkLife\Controller\UserController:logout')->add($auth);
-$app->post('/users/forgotten-password', '\TrkLife\Controller\UserController:forgottenPassword'); // TODO
+$app->post('/users/forgotten-password', '\TrkLife\Controller\UserController:forgottenPassword');
 $app->post('/users/reset-password', '\TrkLife\Controller\UserController:resetPassword'); // TODO
 
 /**

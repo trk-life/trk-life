@@ -5,6 +5,8 @@ namespace TrkLife\Controller;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Http\Response;
+use TrkLife\Email\Email;
+use TrkLife\Entity\ForgottenPassword;
 use TrkLife\Entity\Token;
 use TrkLife\Entity\User;
 
@@ -143,5 +145,93 @@ class UserController
             'status' => 'success',
             'message' => 'Successfully logged out.'
         ));
+    }
+
+    /**
+     * Processes a forgotten password request
+     *
+     * @param ServerRequestInterface $request   The request object
+     * @param Response $response                The response object
+     * @return Response                         The response object
+     */
+    public function forgottenPassword(ServerRequestInterface $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        // Get and check email and password
+        $email = filter_var(empty($data['email']) ? '' : $data['email'], FILTER_SANITIZE_EMAIL);
+        if (empty($email)) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'Invalid email address'
+            ));
+        }
+
+        // Get user from DB
+        $user_repository = $this->c->EntityManager->getRepository('TrkLife\Entity\User');
+        $user = $user_repository->findOneByEmail($email);
+
+        // Check user exists and email is correct
+        if ($user === null) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'A user with this email address cannot be found.'
+            ));
+        }
+
+        // Create forgotten password entity
+        $forgotten_password_request = new ForgottenPassword();
+        $token = $forgotten_password_request->generateToken();
+        $forgotten_password_request->set('email', $email);
+        $forgotten_password_request->set('token', $token);
+        $forgotten_password_request->set('ip_address', $request->getAttribute('ip_address'));
+        $forgotten_password_request->set('user_agent', empty($_SERVER['HTTP_USER_AGENT']) ? '' : $_SERVER['HTTP_USER_AGENT']);
+        $forgotten_password_request->set('status', ForgottenPassword::STATUS_SUBMITTED);
+
+        // TODO: rate limit by email and ip
+
+        // Persist entity
+        try {
+            $this->c->EntityManager->persist($forgotten_password_request);
+            $this->c->EntityManager->flush();
+        } catch (\Exception $e) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'There was a problem processing your forgotten password request, please try again later.'
+            ));
+        }
+
+        // Create link
+        $uri = $request->getUri();
+        $protocol = $uri->getScheme();
+        $host = $uri->getHost();
+        $port = $uri->getPort() == '80' ? '' : ':' . $uri->getPort();
+        $link = "$protocol://$host$port/#reset-password?token=$token"; // TODO use real link from app
+
+        // Send email
+        $email_result = Email::create(
+            $this->c,
+            $email,
+            $user->getFirstName() . ' ' . $user->getLastName(),
+            'forgotten_password',
+            array('link' => $link, 'name' => $user->getFirstName())
+        );
+
+        if (!$email_result) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'There was a problem processing your forgotten password request, please try again later.'
+            ));
+        }
+
+        return $response->withJson(array(
+            'status' => 'success',
+            'message' => 'An email has been sent to this address containing a link to reset your password.'
+        ));
+    }
+
+    public function resetPassword()
+    {
+        // TODO: implement
     }
 }

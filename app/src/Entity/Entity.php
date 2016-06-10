@@ -34,35 +34,45 @@ abstract class Entity
     protected $modified;
 
     /**
-     * @return int  Created unix timestamp of the entity
+     * General purpose getter
+     *
+     * @param string $key   The name of the param to get
+     * @return mixed        The value of the param
+     * @throws \Exception   If the param doesn't exist
      */
-    public function getCreated()
+    public function get($key)
     {
-        return $this->created;
+        $get_method_name = "get" . ucfirst($key);
+        if (method_exists($this, $get_method_name)) {
+            return $this->$get_method_name();
+        }
+
+        if (!property_exists($this, $key)) {
+            throw new \Exception("Parameter '$key' missing.");
+        }
+
+        return $this->$key;
     }
 
     /**
-     * @param int $created  Created unix timestamp of the entity
+     * General purpose setter
+     *
+     * @param string $key   The name of the param to set
+     * @param mixed $value  The value to set
+     * @throws \Exception   If the param doesn't exist
      */
-    public function setCreated($created)
+    public function set($key, $value)
     {
-        $this->created = $created;
-    }
+        $set_method_name = "set" . ucfirst($key);
+        if (method_exists($this, $set_method_name)) {
+            $this->$set_method_name($value);
+        }
 
-    /**
-     * @return int  Modified unix timestamp of the entity
-     */
-    public function getModified()
-    {
-        return $this->modified;
-    }
+        if (!property_exists($this, $key)) {
+            throw new \Exception("Parameter '$key' missing.");
+        }
 
-    /**
-     * @param int $modified Modified unix timestamp of the entity
-     */
-    public function setModified($modified)
-    {
-        $this->modified = $modified;
+        $this->$key = $value;
     }
 
     /**

@@ -110,8 +110,9 @@ class Email
      * @param ContainerInterface $c DI container
      * @param string $to_email      The recipients email address
      * @param string $to_name       The recipients name
-     * @param string $email_type    The email type - definied in the config
+     * @param string $email_type    The email type - defined in the config
      * @param array $data           The data to use in the template
+     * @return bool The success or failure of sending
      */
     public static function create($c, $to_email, $to_name, $email_type, $data = array())
     {
