@@ -103,6 +103,13 @@ class User extends Entity
         if (!Validator::validateField($password, 'stringType', array('length' => array(8, null)))) {
             return false;
         }
+
+        // If password is empty just set to null, don't try and hash it
+        if (empty($password)) {
+            $this->password = null;
+            return true;
+        }
+
         $this->password = $this->hashPassword($password);
         return true;
     }
