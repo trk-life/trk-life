@@ -132,6 +132,8 @@ abstract class Entity
 
     /**
      * Called pre-persisting
+     *
+     * @codeCoverageIgnore
      */
     protected function prePersistHook()
     {
@@ -140,6 +142,8 @@ abstract class Entity
 
     /**
      * Called pre-update
+     *
+     * @codeCoverageIgnore
      */
     protected function preUpdateHook()
     {

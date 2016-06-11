@@ -174,10 +174,7 @@ class User extends Entity
             $messages[] = 'Email address is invalid.';
         }
 
-        // Password - strength is already validated
-        if (!Validator::validateField($this->password, 'stringType', array('notEmpty' => array()))) {
-            $messages[] = 'Password is invalid.';
-        }
+        // Password - no need to validate as it is validated on set and isn't required for an update
 
         // First name
         if (!Validator::validateField($this->first_name, 'stringType', array(

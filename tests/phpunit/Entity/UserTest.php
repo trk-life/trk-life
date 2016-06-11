@@ -202,5 +202,74 @@ class UserTest extends \PHPUnit_Framework_TestCase
         } catch (ValidationException $e) {
             $this->fail('User should validate successfully.');
         }
+
+        // Test id fails
+        $this->user->set('id', 'abc');
+
+        try {
+            $this->user->validate();
+            $this->fail('User should fail to validate with invalid ID.');
+        } catch (ValidationException $e) {
+            $this->assertEquals(
+                array('ID is invalid.'),
+                $e->validation_messages
+            );
+        }
+    }
+
+    public function testPrePersist()
+    {
+        $this->assertNull($this->user->get('created'));
+        $this->assertNull($this->user->get('modified'));
+
+        // Test validation will fails
+        $this->user->set('first_name', 'George');
+        $this->user->set('last_name', 'Webb');
+        $this->user->set('email', 'georgeATwebb.uno');
+        $this->user->set('password', '12345678');
+        $this->user->set('status', User::STATUS_ACTIVE);
+        $this->user->set('role', User::ROLE_ADMIN);
+
+        try {
+            $this->user->onPrePersist();
+            $this->fail('User validation should fail on PreUpdate');
+        } catch (ValidationException $e) {
+            $this->assertTrue(true);
+        }
+
+        // Test validation passes
+        $this->user->set('email', 'george@webb.uno');
+
+        $this->user->onPrePersist();
+
+        $this->assertTrue(is_int($this->user->get('created')));
+        $this->assertTrue(is_int($this->user->get('modified')));
+    }
+
+    public function testPreUpdate()
+    {
+        $this->assertNull($this->user->get('modified'));
+
+        // Test validation will fails
+        $this->user->set('first_name', 'George');
+        $this->user->set('last_name', 'Webb');
+        $this->user->set('email', 'georgeATwebb.uno');
+        $this->user->set('password', '12345678');
+        $this->user->set('status', User::STATUS_ACTIVE);
+        $this->user->set('role', User::ROLE_ADMIN);
+
+        try {
+            $this->user->onPreUpdate();
+            $this->fail('User validation should fail on PreUpdate');
+        } catch (ValidationException $e) {
+            $this->assertTrue(true);
+        }
+
+        // Test validation passes
+        $this->user->set('email', 'george@webb.uno');
+
+        $this->user->onPreUpdate();
+
+        $this->assertTrue(is_int($this->user->get('modified')));
     }
 }
