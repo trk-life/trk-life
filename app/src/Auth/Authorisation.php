@@ -48,7 +48,7 @@ class Authorisation
         $user = $request->getAttribute('user');
 
         // Check role is set for user
-        if (empty($user->getRole())) {
+        if (empty($user->get('role'))) {
             return false;
         }
 
@@ -57,7 +57,7 @@ class Authorisation
         $permission = $route->getCallable() . ':' . $request->getMethod();
 
         // Check user's role has permission
-        if (!static::roleHasPermission($user->getRole(), $permission)) {
+        if (!static::roleHasPermission($user->get('role'), $permission)) {
             return false;
         }
 

@@ -94,50 +94,10 @@ class User extends Entity
     private $status;
 
     /**
-     * @return int User's ID
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id   User's ID
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string   User's email address
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email User's email address
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * @return string   User's hashed password
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * @param string $password  User's hashed password
      * @return bool             If the password was validated successfully
      */
-    public function setPassword($password)
+    protected function setPassword($password)
     {
         // Do password strength validation now, as we are hashing it
         if (!Validator::validateField($password, 'stringType', array('length' => array(8, null)))) {
@@ -145,70 +105,6 @@ class User extends Entity
         }
         $this->password = $this->hashPassword($password);
         return true;
-    }
-
-    /**
-     * @return string   User's first name
-     */
-    public function getFirstName()
-    {
-        return $this->first_name;
-    }
-
-    /**
-     * @param string $first_name    User's first name
-     */
-    public function setFirstName($first_name)
-    {
-        $this->first_name = $first_name;
-    }
-
-    /**
-     * @return string   User's last name
-     */
-    public function getLastName()
-    {
-        return $this->last_name;
-    }
-
-    /**
-     * @param string $last_name User's last name
-     */
-    public function setLastName($last_name)
-    {
-        $this->last_name = $last_name;
-    }
-
-    /**
-     * @return string   User's role
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param string $role  User's role
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-    }
-
-    /**
-     * @return string   User's status (active, disabled)
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param string $status    User's status (active, disabled)
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
     }
 
     /**

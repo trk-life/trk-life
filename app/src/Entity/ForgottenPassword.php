@@ -86,6 +86,27 @@ class ForgottenPassword extends Entity
     protected $status;
 
     /**
+     * Hashes the given token before setting it
+     *
+     * @param string $token Hashed token
+     */
+    protected function setToken($token)
+    {
+        $this->token = static::hashToken($token);
+    }
+
+    /**
+     * Hashes a token for storage in the DB
+     *
+     * @param string $token The token to hash
+     * @return string       The sha256 hashed token
+     */
+    public static function hashToken($token)
+    {
+        return hash('sha256', $token);
+    }
+
+    /**
      * Generates and returns a token
      *
      * @return string   A random token

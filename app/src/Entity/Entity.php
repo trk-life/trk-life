@@ -42,7 +42,7 @@ abstract class Entity
      */
     public function get($key)
     {
-        $get_method_name = "get" . ucfirst($key);
+        $get_method_name = "get" . static::getParamForMethodName($key);
         if (method_exists($this, $get_method_name)) {
             return $this->$get_method_name();
         }
@@ -59,13 +59,14 @@ abstract class Entity
      *
      * @param string $key   The name of the param to set
      * @param mixed $value  The value to set
+     * @return bool         If the set was successful
      * @throws \Exception   If the param doesn't exist
      */
     public function set($key, $value)
     {
-        $set_method_name = "set" . ucfirst($key);
+        $set_method_name = "set" . static::getParamForMethodName($key);
         if (method_exists($this, $set_method_name)) {
-            $this->$set_method_name($value);
+            return $this->$set_method_name($value);
         }
 
         if (!property_exists($this, $key)) {
@@ -73,6 +74,28 @@ abstract class Entity
         }
 
         $this->$key = $value;
+        return true;
+    }
+
+    /**
+     * Turns a param name with underscores to the form required for getters and setters
+     * i.e. turn first_name to FirstName, for getFirstName and setFirstName
+     *
+     * @param string $param_name    The param name
+     * @return string               The formatted param name for method names
+     */
+    public static function getParamForMethodName($param_name)
+    {
+        // Replace underscores and hyphens for spaces
+        $param_name = str_replace(array('_', '-'), ' ', $param_name);
+
+        // UC first char of each word
+        $param_name = ucwords(strtolower($param_name));
+
+        // Remove spaces
+        $param_name = str_replace(' ', '', $param_name);
+
+        return $param_name;
     }
 
     /**

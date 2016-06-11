@@ -67,101 +67,13 @@ class Token extends Entity
     private $user_agent;
 
     /**
-     * @return int  Token's ID
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id   Token's ID
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return int  The user ID for token's user
-     */
-    public function getUserId()
-    {
-        return $this->user_id;
-    }
-
-    /**
-     * @param int $user_id  The user ID for token's user
-     */
-    public function setUserId($user_id)
-    {
-        $this->user_id = $user_id;
-    }
-
-    /**
-     * @return string   Hashed token
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    /**
      * Hashes the given token before setting it
      *
      * @param string $token Hashed token
      */
-    public function setToken($token)
+    protected function setToken($token)
     {
         $this->token = static::hashToken($token);
-    }
-
-    /**
-     * @return int  The number of seconds after the creation date that the token is invalid
-     */
-    public function getExpiresAfter()
-    {
-        return $this->expires_after;
-    }
-
-    /**
-     * @param int $expires_after    The number of seconds after the creation date that the token is invalid
-     */
-    public function setExpiresAfter($expires_after)
-    {
-        $this->expires_after = $expires_after;
-    }
-
-    /**
-     * @return int  The unix timestamp of the time the token was last accessed
-     */
-    public function getLastAccessed()
-    {
-        return $this->last_accessed;
-    }
-
-    /**
-     * @param int $last_accessed    The unix timestamp of the time the token was last accessed
-     */
-    public function setLastAccessed($last_accessed)
-    {
-        $this->last_accessed = $last_accessed;
-    }
-
-    /**
-     * @return string   The user agent of the browser used to create the token
-     */
-    public function getUserAgent()
-    {
-        return $this->user_agent;
-    }
-
-    /**
-     * @param string $user_agent    The user agent of the browser used to create the token
-     */
-    public function setUserAgent($user_agent)
-    {
-        $this->user_agent = $user_agent;
     }
 
     /**

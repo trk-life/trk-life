@@ -66,18 +66,18 @@ class CreateUserCommand extends Command
         $output->writeln('<info>Creating new trk.life user.</info>');
 
         $user = new User();
-        $user->setEmail($input->getArgument('email'));
+        $user->set('email', $input->getArgument('email'));
 
-        if (!$user->setPassword($input->getArgument('password'))) {
+        if (!$user->set('password', $input->getArgument('password'))) {
             $output->writeln('<comment>Password must be at least 8 characters long.</comment>');
             $output->writeln('<error>Exiting.</error>');
             return;
         }
 
-        $user->setFirstName($input->getArgument('first_name'));
-        $user->setLastName($input->getArgument('last_name'));
-        $user->setRole($input->getArgument('role'));
-        $user->setStatus('active');
+        $user->set('first_name', $input->getArgument('first_name'));
+        $user->set('last_name', $input->getArgument('last_name'));
+        $user->set('role', $input->getArgument('role'));
+        $user->set('status', User::STATUS_ACTIVE);
 
         try {
             // Save the user

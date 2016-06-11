@@ -72,7 +72,7 @@ class UserController
         }
 
         // Check user is active
-        if ($user->getStatus() != User::STATUS_ACTIVE) {
+        if ($user->get('status') != User::STATUS_ACTIVE) {
             return $response->withJson(array(
                 'status' => 'fail',
                 'message' => 'This user is currently disabled.'
@@ -88,11 +88,11 @@ class UserController
         $token_entity = new Token();
         $token = $token_entity->generateToken();
 
-        $token_entity->setUserId($user->getId());
-        $token_entity->setToken($token);
-        $token_entity->setExpiresAfter($expires);
-        $token_entity->setLastAccessed((new \DateTime())->getTimestamp());
-        $token_entity->setUserAgent(empty($_SERVER['HTTP_USER_AGENT']) ? '' : $_SERVER['HTTP_USER_AGENT']);
+        $token_entity->set('user_id', $user->get('id'));
+        $token_entity->set('token', $token);
+        $token_entity->set('expires_after', $expires);
+        $token_entity->set('last_accessed', (new \DateTime())->getTimestamp());
+        $token_entity->set('user_agent', empty($_SERVER['HTTP_USER_AGENT']) ? '' : $_SERVER['HTTP_USER_AGENT']);
 
         try {
             // Save the token
@@ -212,9 +212,9 @@ class UserController
         $email_result = Email::create(
             $this->c,
             $email,
-            $user->getFirstName() . ' ' . $user->getLastName(),
+            $user->get('first_name') . ' ' . $user->get('last_name'),
             'forgotten_password',
-            array('link' => $link, 'name' => $user->getFirstName())
+            array('link' => $link, 'name' => $user->get('first_name'))
         );
 
         if (!$email_result) {
