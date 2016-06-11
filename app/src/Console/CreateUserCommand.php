@@ -3,7 +3,7 @@
 namespace TrkLife\Console;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Interop\Container\ContainerInterface;
+use TrkLife\Container;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,7 +24,7 @@ class CreateUserCommand extends Command
     /**
      * DI container
      *
-     * @var ContainerInterface
+     * @var Container
      */
     private $c;
 
@@ -32,9 +32,9 @@ class CreateUserCommand extends Command
      * CreateUserCommand constructor.
      *
      * @param null|string $name     The command name
-     * @param ContainerInterface $c DI container
+     * @param Container $c          DI container
      */
-    public function __construct($name, ContainerInterface $c)
+    public function __construct($name, Container $c)
     {
         parent::__construct($name);
         $this->c = $c;
@@ -87,7 +87,7 @@ class CreateUserCommand extends Command
             $output->writeln('<comment>Validation errors found:</comment>');
 
             foreach ($e->validation_messages as $message) {
-                $output->writeln('<comment>    $message</comment>');
+                $output->writeln("<comment>    $message</comment>");
             }
 
             $output->writeln('<error>Exiting.</error>');

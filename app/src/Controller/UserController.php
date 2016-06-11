@@ -2,7 +2,7 @@
 
 namespace TrkLife\Controller;
 
-use Interop\Container\ContainerInterface;
+use TrkLife\Container;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Http\Response;
 use TrkLife\Email\Email;
@@ -23,16 +23,16 @@ class UserController
     /**
      * Dependency Inj Container
      *
-     * @var ContainerInterface
+     * @var Container
      */
     private $c;
 
     /**
      * UserController constructor.
      *
-     * @param ContainerInterface $c Dependency Inj Container
+     * @param Container $c  Dependency Inj Container
      */
-    public function __construct(ContainerInterface $c)
+    public function __construct(Container $c)
     {
         $this->c = $c;
     }
@@ -61,6 +61,8 @@ class UserController
 
         // Get user from DB
         $user_repository = $this->c->EntityManager->getRepository('TrkLife\Entity\User');
+
+        /* @var $user User */
         $user = $user_repository->findOneByEmail($email);
 
         // Check user exists and email is correct
@@ -169,6 +171,8 @@ class UserController
 
         // Get user from DB
         $user_repository = $this->c->EntityManager->getRepository('TrkLife\Entity\User');
+
+        /* @var $user User */
         $user = $user_repository->findOneByEmail($email);
 
         // Check user exists and email is correct

@@ -2,7 +2,7 @@
 
 namespace TrkLife\Auth;
 
-use Interop\Container\ContainerInterface;
+use TrkLife\Container;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Yaml\Yaml;
 use TrkLife\Config;
@@ -16,7 +16,7 @@ use TrkLife\Config;
 class Authorisation
 {
     /**
-     * @var ContainerInterface
+     * @var Container
      */
     private $c;
 
@@ -29,9 +29,9 @@ class Authorisation
 
     /**
      * Authorisation constructor.
-     * @param ContainerInterface $c
+     * @param Container $c
      */
-    public function __construct(ContainerInterface $c)
+    public function __construct(Container $c)
     {
         $this->c = $c;
         $this->roles = Yaml::parse(file_get_contents(Config::get('AppDir') . '/config/roles.yml'));

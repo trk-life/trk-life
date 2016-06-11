@@ -2,7 +2,7 @@
 
 namespace TrkLife\Auth;
 
-use Interop\Container\ContainerInterface;
+use TrkLife\Container;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -14,15 +14,15 @@ use Psr\Http\Message\ServerRequestInterface;
 class Authentication
 {
     /**
-     * @var ContainerInterface
+     * @var Container
      */
     private $c;
 
     /**
      * Authentication constructor.
-     * @param ContainerInterface $c
+     * @param Container $c
      */
-    public function __construct(ContainerInterface $c)
+    public function __construct(Container $c)
     {
         $this->c = $c;
     }

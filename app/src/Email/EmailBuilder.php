@@ -1,7 +1,8 @@
 <?php
 
 namespace TrkLife\Email;
-use Interop\Container\ContainerInterface;
+
+use TrkLife\Container;
 use League\Plates\Engine;
 use TrkLife\Config;
 
@@ -21,7 +22,7 @@ class EmailBuilder
     /**
      * DI container
      *
-     * @var ContainerInterface
+     * @var Container
      */
     private $c;
 
@@ -49,11 +50,11 @@ class EmailBuilder
     /**
      * EmailBuilder constructor.
      *
-     * @param ContainerInterface $c DI container
+     * @param Container $c          DI container
      * @param string $email_type    The email type - used to get template path
      * @param array $data           The data to use in the template
      */
-    public function __construct($c, $email_type, $data)
+    public function __construct(Container $c, $email_type, $data)
     {
         $this->c = $c;
         $this->email_type = $email_type;

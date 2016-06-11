@@ -2,7 +2,7 @@
 
 namespace TrkLife\Auth;
 
-use Interop\Container\ContainerInterface;
+use TrkLife\Container;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr7Middlewares\Middleware;
 use Slim\Http\Response;
@@ -16,15 +16,15 @@ use Slim\Http\Response;
 class AuthMiddleware
 {
     /**
-     * @var ContainerInterface
+     * @var Container
      */
     private $c;
 
     /**
      * AuthMiddleware constructor.
-     * @param ContainerInterface $c
+     * @param Container $c
      */
-    public function __construct(ContainerInterface $c)
+    public function __construct(Container $c)
     {
         $this->c = $c;
     }

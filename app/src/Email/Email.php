@@ -2,7 +2,7 @@
 
 namespace TrkLife\Email;
 
-use Interop\Container\ContainerInterface;
+use TrkLife\Container;
 use PHPMailer;
 use TrkLife\Config;
 
@@ -17,7 +17,7 @@ class Email
     /**
      * DI container
      *
-     * @var ContainerInterface
+     * @var Container
      */
     private $c;
 
@@ -73,13 +73,13 @@ class Email
     /**
      * Email constructor.
      *
-     * @param ContainerInterface $c DI container
+     * @param Container $c          DI container
      * @param string $to_email      The recipients email address
      * @param string $to_name       The recipients name
      * @param string $email_type    The email type - definied in the config
      * @param array $data           The data to use in the template
      */
-    public function __construct($c, $to_email, $to_name, $email_type, $data = array())
+    public function __construct(Container $c, $to_email, $to_name, $email_type, $data = array())
     {
         $this->c = $c;
 
@@ -107,14 +107,14 @@ class Email
     /**
      * Convenience function for creating and sending an email
      *
-     * @param ContainerInterface $c DI container
+     * @param Container $c          DI container
      * @param string $to_email      The recipients email address
      * @param string $to_name       The recipients name
      * @param string $email_type    The email type - defined in the config
      * @param array $data           The data to use in the template
      * @return bool The success or failure of sending
      */
-    public static function create($c, $to_email, $to_name, $email_type, $data = array())
+    public static function create(Container $c, $to_email, $to_name, $email_type, $data = array())
     {
         $email = new static($c, $to_email, $to_name, $email_type, $data);
         $email->prepare();
