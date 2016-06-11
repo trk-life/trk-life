@@ -11,7 +11,7 @@ use TrkLife\Validator;
  * @package TrkLife\Entity
  * @author George Webb <george@webb.uno>
  *
- * @Entity(repositoryClass="TrkLife\Entity\TokenRepository")
+ * @Entity(repositoryClass="TrkLife\Repository\TokenRepository")
  * @Table(name="user_tokens")
  */
 class Token extends Entity
@@ -24,7 +24,7 @@ class Token extends Entity
      * @GeneratedValue
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * The user ID for token's user
@@ -32,7 +32,7 @@ class Token extends Entity
      * @Column(type="integer")
      * @var int
      */
-    private $user_id;
+    protected $user_id;
 
     /**
      * Hashed token
@@ -40,7 +40,7 @@ class Token extends Entity
      * @Column(type="string")
      * @var string
      */
-    private $token;
+    protected $token;
 
     /**
      * The number of seconds after the creation date that the token is invalid
@@ -48,7 +48,7 @@ class Token extends Entity
      * @Column(type="integer")
      * @var int
      */
-    private $expires_after;
+    protected $expires_after;
 
     /**
      * The unix timestamp of the time the token was last accessed
@@ -56,7 +56,7 @@ class Token extends Entity
      * @Column(type="integer")
      * @var int
      */
-    private $last_accessed;
+    protected $last_accessed;
 
     /**
      * The user agent of the browser used to create the token
@@ -64,7 +64,7 @@ class Token extends Entity
      * @Column(type="string")
      * @var string
      */
-    private $user_agent;
+    protected $user_agent;
 
     /**
      * Hashes the given token before setting it

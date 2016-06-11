@@ -1,8 +1,9 @@
 <?php
 
-namespace TrkLife\Entity;
+namespace TrkLife\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use TrkLife\Entity\Token;
 
 /**
  * Class TokenRepository

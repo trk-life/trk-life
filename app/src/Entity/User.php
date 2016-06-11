@@ -43,7 +43,7 @@ class User extends Entity
      * @GeneratedValue
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * User's email address
@@ -51,7 +51,7 @@ class User extends Entity
      * @Column(type="string")
      * @var string
      */
-    private $email;
+    protected $email;
 
     /**
      * User's hashed password
@@ -59,7 +59,7 @@ class User extends Entity
      * @Column(type="string")
      * @var string
      */
-    private $password;
+    protected $password;
 
     /**
      * User's first name
@@ -67,7 +67,7 @@ class User extends Entity
      * @Column(type="string")
      * @var string
      */
-    private $first_name;
+    protected $first_name;
 
     /**
      * User's last name
@@ -75,7 +75,7 @@ class User extends Entity
      * @Column(type="string")
      * @var string
      */
-    private $last_name;
+    protected $last_name;
 
     /**
      * User's role
@@ -83,7 +83,7 @@ class User extends Entity
      * @Column(type="string")
      * @var string
      */
-    private $role;
+    protected $role;
 
     /**
      * User's status: active or disabled
@@ -91,7 +91,7 @@ class User extends Entity
      * @Column(type="string")
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * @param string $password  User's hashed password
