@@ -89,10 +89,16 @@ class ForgottenPassword extends Entity
      * Hashes the given token before setting it
      *
      * @param string $token Hashed token
+     * @return bool
      */
     protected function setToken($token)
     {
+        if (empty($token)) {
+            return false;
+        }
+
         $this->token = static::hashToken($token);
+        return true;
     }
 
     /**
@@ -154,10 +160,7 @@ class ForgottenPassword extends Entity
             $messages[] = 'Email address is invalid.';
         }
 
-        // Token
-        if (!Validator::validateField($this->token, 'stringType', array('notEmpty' => array()))) {
-            $messages[] = 'Token is invalid.';
-        }
+        // Token: don't need to validate, as it will always be either a hash or null, and it's not required for updates
 
         // IP Address
         if (!Validator::validateField($this->ip_address, 'stringType', array('notEmpty' => array()))) {

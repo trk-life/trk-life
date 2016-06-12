@@ -40,6 +40,11 @@ class TokenTest extends \PHPUnit_Framework_TestCase
         $this->token->set('token', $token);
         $hashed_token_2 = $this->token->get('token');
         $this->assertEquals($hashed_token_1, $hashed_token_2);
+
+        // Test return value (should be false for empty tokens)
+        $this->assertTrue($this->token->set('token', 'ok'));
+        $this->assertFalse($this->token->set('token', ''));
+        $this->assertFalse($this->token->set('token', null));
     }
 
     /**

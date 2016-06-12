@@ -70,10 +70,16 @@ class Token extends Entity
      * Hashes the given token before setting it
      *
      * @param string $token Hashed token
+     * @return bool
      */
     protected function setToken($token)
     {
+        if (empty($token)) {
+            return false;
+        }
+
         $this->token = static::hashToken($token);
+        return true;
     }
 
     /**
