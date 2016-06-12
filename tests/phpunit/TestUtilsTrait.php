@@ -5,6 +5,7 @@ namespace TrkLife;
 use Slim\Http\Environment;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use TrkLife\Entity\Token;
 use TrkLife\Entity\User;
 
 /**
@@ -50,6 +51,17 @@ trait TestUtilsTrait
             $user->set('created', 1234567890);
             $user->set('modified', 1234567890);
             $request = $request->withAttribute('user', $user);
+
+            $token = new Token();
+            $token->set('id', 78);
+            $token->set('user_id', 4);
+            $token->set('token', $token->generateToken());
+            $token->set('expires_after', 60 * 60 * 24);
+            $token->set('last_accessed', time());
+            $token->set('user_agent', 'Big Dave\'s Browser V1');
+            $token->set('created', time());
+
+            $request = $request->withAttribute('token_entity', $token);
         }
 
         return $request;

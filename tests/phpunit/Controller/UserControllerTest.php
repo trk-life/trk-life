@@ -308,7 +308,22 @@ class UserControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testLogout()
     {
-        // TODO
+        $this->c->EntityManager
+            ->expects($this->at(0))
+            ->method('remove')
+            ->with($this->isInstanceOf('TrkLife\Entity\Token'));
+
+        $this->c->EntityManager
+            ->expects($this->at(1))
+            ->method('flush');
+
+        $response = $this->user_controller->logout($this->createRequest(), $this->createResponse());
+
+        $this->assertEquals('application/json;charset=utf-8', $response->getHeaderLine('content-type'));
+        $this->assertEquals(
+            '{"status":"success","message":"Successfully logged out."}',
+            $response->getBody()->__toString()
+        );
     }
 
     public function testForgottenPassword()
