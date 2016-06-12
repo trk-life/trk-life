@@ -35,7 +35,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
         };
 
         // Mocked mailer
-        $this->c['mailer'] = function ($this) {
+        $this->c['mailer'] = function () {
             $mailer = $this
                 ->getMockBuilder('\PHPMailer')
                 ->setMethods(
