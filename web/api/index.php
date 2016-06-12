@@ -47,6 +47,10 @@ $c['EntityManager'] = function () {
     return EntityManager::create($conn, $conf);
 };
 
+$c['mailer'] = function () {
+    return new PHPMailer();
+};
+
 //Override the default Not Found Handler
 $c['notFoundHandler'] = function ($c) {
     return function ($request, $response) use ($c) {

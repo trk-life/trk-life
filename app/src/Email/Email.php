@@ -83,7 +83,7 @@ class Email
     {
         $this->c = $c;
 
-        $this->mailer = new PHPMailer();
+        $this->mailer = $c->mailer;
 
         $this->mailer->isSMTP();
         $this->mailer->Host = Config::get('Email.smtp.host');

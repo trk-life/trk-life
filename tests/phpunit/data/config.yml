@@ -1,1 +1,17 @@
 LogLevel: debug
+
+Email:
+  from_address: from@example.com
+  from_name: John Sender
+  smtp:
+    host: localhost
+    port: 25
+    use_auth: true
+    username: user1
+    password: password1
+    tls_or_ssl: ''
+  types:
+    test_email:
+      subject: Testing email sending
+    test_email_with_data:
+      subject: Testing email sending
