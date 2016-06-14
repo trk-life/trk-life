@@ -160,7 +160,7 @@ class UserController
     {
         $data = $request->getParsedBody();
 
-        // Get and check email and password
+        // Get and check email
         $email = filter_var(empty($data['email']) ? '' : $data['email'], FILTER_SANITIZE_EMAIL);
         if (empty($email)) {
             return $response->withJson(array(
@@ -234,8 +234,92 @@ class UserController
         ));
     }
 
-    public function resetPassword()
+    /**
+     * Resets a password from a forgotten password request
+     *
+     * @param ServerRequestInterface $request   The request object
+     * @param Response $response                The response object
+     * @return Response                         The response object
+     */
+    public function resetPassword(ServerRequestInterface $request, Response $response)
     {
-        // TODO: implement
+        $data = $request->getParsedBody();
+
+        // Get and check email and password
+        $token = filter_var(empty($data['token']) ? '' : $data['token'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $new_password = filter_var(empty($data['new_password']) ? '' : $data['new_password'], FILTER_SANITIZE_STRING);
+        if (empty($token) || empty($new_password)) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'Please make sure all fields are complete.'
+            ));
+        }
+
+        // Get request from DB
+        $forgotten_password_repository = $this->c->EntityManager->getRepository('TrkLife\Entity\ForgottenPassword');
+
+        /* @var $forgotten_password ForgottenPassword */
+        $forgotten_password = $forgotten_password_repository->findOneByToken($token);
+
+        if ($forgotten_password == null) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'Your link is invalid, please try again.'
+            ));
+        }
+
+        if ($forgotten_password->get('status') != ForgottenPassword::STATUS_SUBMITTED) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'Your link has already been used, please try again.'
+            ));
+        }
+
+        if ($forgotten_password->get('created') < (new \DateTime())->sub(new \DateInterval('P1D'))->getTimestamp()) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'Your link has expired, please try again.'
+            ));
+        }
+
+        // Get user from DB
+        $user_repository = $this->c->EntityManager->getRepository('TrkLife\Entity\User');
+
+        /* @var $user User */
+        $user = $user_repository->findOneByEmail($forgotten_password->get('email'));
+
+        if ($user == null) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'There was a problem, please try again.'
+            ));
+        }
+
+        // Save the new password
+        if (!$user->set('password', $new_password)) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'New password must be at least 8 characters long.'
+            ));
+        }
+
+        // Update the forgotten password request
+        $forgotten_password->set('status', ForgottenPassword::STATUS_USED);
+
+        try {
+            $this->c->EntityManager->persist($user);
+            $this->c->EntityManager->persist($forgotten_password);
+            $this->c->EntityManager->flush();
+        } catch (\Exception $e) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'There was a problem, please try again.'
+            ));
+        }
+
+        return $response->withJson(array(
+            'status' => 'success',
+            'message' => 'Successfully reset password.'
+        ));
     }
 }

@@ -93,7 +93,7 @@ $app->post('/users/login', '\TrkLife\Controller\UserController:login');
 $app->get('/users/validate-token', '\TrkLife\Controller\UserController:validateToken')->add($auth);
 $app->get('/users/logout', '\TrkLife\Controller\UserController:logout')->add($auth);
 $app->post('/users/forgotten-password', '\TrkLife\Controller\UserController:forgottenPassword');
-$app->post('/users/reset-password', '\TrkLife\Controller\UserController:resetPassword'); // TODO
+$app->post('/users/reset-password', '\TrkLife\Controller\UserController:resetPassword');
 
 /**
  * User management routes

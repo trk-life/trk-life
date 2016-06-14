@@ -11,7 +11,8 @@ use TrkLife\Validator;
  * @package TrkLife\Entity
  * @author George Webb <george@webb.uno>
  *
- * @Entity @Table(name="forgotten_password_requests")
+ * @Entity(repositoryClass="TrkLife\Repository\ForgottenPasswordRepository")
+ * @Table(name="forgotten_password_requests")
  */
 class ForgottenPassword extends Entity
 {
