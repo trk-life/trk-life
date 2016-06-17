@@ -5,9 +5,9 @@ Users API Resources
 
 User related API resources.
 
-### Auth related ###
+# Auth related #
 
-##### POST http://your.trk.life.domain/api/users/login #####
+### POST http://your.trk.life.domain/api/users/login ###
 
 Logs in a user, returning a token which can be used for authenticating future requests. Doesn't require the 
 "Authorisation" header.
@@ -59,7 +59,7 @@ below)
 
 ---
 
-##### GET http://your.trk.life.domain/api/users/logout #####
+### GET http://your.trk.life.domain/api/users/logout ###
 
 Logs out a user, invalidating the token passed in the "Authorisation" header. If the token passed is invalid,
 a 401 Unauthorised response is returned.
@@ -81,7 +81,7 @@ JSON object containing the following properties:
 
 ---
 
-##### GET http://your.trk.life.domain/api/users/validate-token #####
+### GET http://your.trk.life.domain/api/users/validate-token ###
 
 Validate that a token is still valid, also returning the user's details. If the token passed is invalid,
 a 401 Unauthorised response is returned.
@@ -113,7 +113,7 @@ a 401 Unauthorised response is returned.
 
 ---
 
-##### POST http://your.trk.life.domain/api/users/forgotten-password #####
+### POST http://your.trk.life.domain/api/users/forgotten-password ###
 
 Request a password reset for a forgotten password, using an email address. If successful a reset link is sent via email. 
 Doesn't require the "Authorisation" header.
@@ -146,7 +146,7 @@ user object and the new token.
 
 ---
 
-##### POST http://your.trk.life.domain/api/users/reset-password #####
+### POST http://your.trk.life.domain/api/users/reset-password ###
 
 Resets a user's password using the link sent via email by a forgotten password request. Doesn't require the
 "Authorisation" header.
@@ -181,17 +181,17 @@ user object and the new token.
 
 ---
 
-### User settings ###
+# User settings #
 
 Resources for managing own user.
 
-##### GET http://your.trk.life.domain/api/settings/user/get #####
+### GET http://your.trk.life.domain/api/settings/user/get ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/settings/user/update #####
+### POST http://your.trk.life.domain/api/settings/user/update ###
 
 Note: requires password entry. Cannot downgrade own user's role unless there is another admin.
 
@@ -199,7 +199,7 @@ TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/settings/user/change-password #####
+### POST http://your.trk.life.domain/api/settings/user/change-password ###
 
 Note: requires existing password entry
 
@@ -207,7 +207,7 @@ TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/settings/user/delete #####
+### POST http://your.trk.life.domain/api/settings/user/delete ###
 
 Note: requires password entry. Cannot delete own user if it is the last user (admin user).
 
@@ -215,35 +215,35 @@ TODO
 
 ---
 
-### Team management ###
+# Team management #
 
 Resources for managing a team and it's users. These resources require user to have **admin** role.
 
-##### POST http://your.trk.life.domain/api/team/users/list #####
+### POST http://your.trk.life.domain/api/team/users/list ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/team/users/{id}/get #####
+### POST http://your.trk.life.domain/api/team/users/{id}/get ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/team/users/create #####
+### POST http://your.trk.life.domain/api/team/users/create ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/team/users/{id}/update #####
+### POST http://your.trk.life.domain/api/team/users/{id}/update ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/team/users/{id}/delete #####
+### POST http://your.trk.life.domain/api/team/users/{id}/delete ###
 
 Note: cannot delete own user through team settings.
 

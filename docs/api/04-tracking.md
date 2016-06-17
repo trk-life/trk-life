@@ -5,13 +5,13 @@ Tracking API Resources
 
 Resources for saving and retrieving tracking data.
 
-##### GET http://your.trk.life.domain/api/tracking/data #####
+### GET http://your.trk.life.domain/api/tracking/data ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/tracking/save #####
+### POST http://your.trk.life.domain/api/tracking/save ###
 
 TODO
 

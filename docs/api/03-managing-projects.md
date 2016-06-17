@@ -5,55 +5,55 @@ Managing Projects API Resources
 
 Resources for managing projects.
 
-##### POST http://your.trk.life.domain/api/categories/create #####
+### POST http://your.trk.life.domain/api/categories/create ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/categories/{id}/update #####
+### POST http://your.trk.life.domain/api/categories/{id}/update ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/categories/{id}/archive #####
+### POST http://your.trk.life.domain/api/categories/{id}/archive ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/projects/create #####
+### POST http://your.trk.life.domain/api/projects/create ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/projects/{id}/update #####
+### POST http://your.trk.life.domain/api/projects/{id}/update ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/projects/{id}/archive #####
+### POST http://your.trk.life.domain/api/projects/{id}/archive ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/items/create #####
+### POST http://your.trk.life.domain/api/items/create ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/items/{id}/update #####
+### POST http://your.trk.life.domain/api/items/{id}/update ###
 
 TODO
 
 ---
 
-##### POST http://your.trk.life.domain/api/items/{id}/archive #####
+### POST http://your.trk.life.domain/api/items/{id}/archive ###
 
 TODO
 
