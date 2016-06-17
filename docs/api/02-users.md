@@ -109,11 +109,67 @@ a 401 Unauthorised response is returned.
 
 ##### POST http://your.trk.life.domain/api/users/forgotten-password #####
 
-TODO
+Request a password reset for a forgotten password, using an email address. If successful a reset link is sent via email. 
+Doesn't require the "Authorisation" header.
+
+**Arguments (Form data)**
+
+| Argument          | Required? | Allowed values | Description |
+| ----------------- | --------- | -------------- | ----------- |
+| email             | required  | *              | The user's email address |
+
+**Returns**
+
+Returns a JSON object containing these properties:
+
+* status: Always returned, and contains either "fail", along with a message (see below), or "success" along with the
+user object and the new token.
+
+* message: Always returned, containing a user-friendly message with the failure reason or a success message.
+
+**Example Request**
+
+    email: email@example.com
+
+**Example Response**
+
+    {
+        "status": "success",
+        "message": "An email has been sent to this address containing a link to reset your password."
+    }
 
 ##### POST http://your.trk.life.domain/api/users/reset-password #####
 
-TODO
+Resets a user's password using the link sent via email by a forgotten password request. Doesn't require the
+"Authorisation" header.
+
+**Arguments (Form data)**
+
+| Argument          | Required? | Allowed values | Description |
+| ----------------- | --------- | -------------- | ----------- |
+| token             | required  | *              | The token send via email in a forgotten password request |
+| new_password      | required  | *              | The user's new password |
+
+**Returns**
+
+Returns a JSON object containing these properties:
+
+* status: Always returned, and contains either "fail", along with a message (see below), or "success" along with the
+user object and the new token.
+
+* message: Always returned, containing a user-friendly message with the failure reason or a success message.
+
+**Example Request**
+
+    token: 8b1b560704be4a04cd1587d05351e0f66f77e14bb3cdbc1a57e7aa8cbf6eac6b
+    new_password: password2
+
+**Example Response**
+
+    {
+        "status": "success",
+        "message": "Successfully reset password."
+    }
 
 ### User settings ###
 
