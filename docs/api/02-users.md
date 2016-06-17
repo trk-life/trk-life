@@ -57,6 +57,8 @@ below)
         "token": "6653aed2427173ee9e4cb952b2ffefe7f11d0cf3d014c23f0aa1a8f17fa968a4"
     }
 
+---
+
 ##### GET http://your.trk.life.domain/api/users/logout #####
 
 Logs out a user, invalidating the token passed in the "Authorisation" header. If the token passed is invalid,
@@ -76,6 +78,8 @@ JSON object containing the following properties:
         "status": "success",
         "message": "Successfully logged out."
     }
+
+---
 
 ##### GET http://your.trk.life.domain/api/users/validate-token #####
 
@@ -107,6 +111,8 @@ a 401 Unauthorised response is returned.
         }
     }
 
+---
+
 ##### POST http://your.trk.life.domain/api/users/forgotten-password #####
 
 Request a password reset for a forgotten password, using an email address. If successful a reset link is sent via email. 
@@ -137,6 +143,8 @@ user object and the new token.
         "status": "success",
         "message": "An email has been sent to this address containing a link to reset your password."
     }
+
+---
 
 ##### POST http://your.trk.life.domain/api/users/reset-password #####
 
@@ -171,6 +179,8 @@ user object and the new token.
         "message": "Successfully reset password."
     }
 
+---
+
 ### User settings ###
 
 Resources for managing own user.
@@ -179,11 +189,15 @@ Resources for managing own user.
 
 TODO
 
+---
+
 ##### POST http://your.trk.life.domain/api/settings/user/update #####
 
 Note: requires password entry. Cannot downgrade own user's role unless there is another admin.
 
 TODO
+
+---
 
 ##### POST http://your.trk.life.domain/api/settings/user/change-password #####
 
@@ -191,11 +205,15 @@ Note: requires existing password entry
 
 TODO
 
+---
+
 ##### POST http://your.trk.life.domain/api/settings/user/delete #####
 
 Note: requires password entry. Cannot delete own user if it is the last user (admin user).
 
 TODO
+
+---
 
 ### Team management ###
 
@@ -205,23 +223,33 @@ Resources for managing a team and it's users. These resources require user to ha
 
 TODO
 
+---
+
 ##### POST http://your.trk.life.domain/api/team/users/{id}/get #####
 
 TODO
+
+---
 
 ##### POST http://your.trk.life.domain/api/team/users/create #####
 
 TODO
 
+---
+
 ##### POST http://your.trk.life.domain/api/team/users/{id}/update #####
 
 TODO
+
+---
 
 ##### POST http://your.trk.life.domain/api/team/users/{id}/delete #####
 
 Note: cannot delete own user through team settings.
 
 TODO
+
+---
 
 Next: [Managing Projects](03-managing-projects.md)
 

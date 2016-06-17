@@ -9,37 +9,55 @@ Resources for managing projects.
 
 TODO
 
+---
+
 ##### POST http://your.trk.life.domain/api/categories/{id}/update #####
 
 TODO
+
+---
 
 ##### POST http://your.trk.life.domain/api/categories/{id}/archive #####
 
 TODO
 
+---
+
 ##### POST http://your.trk.life.domain/api/projects/create #####
 
 TODO
+
+---
 
 ##### POST http://your.trk.life.domain/api/projects/{id}/update #####
 
 TODO
 
+---
+
 ##### POST http://your.trk.life.domain/api/projects/{id}/archive #####
 
 TODO
+
+---
 
 ##### POST http://your.trk.life.domain/api/items/create #####
 
 TODO
 
+---
+
 ##### POST http://your.trk.life.domain/api/items/{id}/update #####
 
 TODO
 
+---
+
 ##### POST http://your.trk.life.domain/api/items/{id}/archive #####
 
 TODO
+
+---
 
 Next: [Tracking](04-tracking.md)
 
