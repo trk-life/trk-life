@@ -282,7 +282,8 @@ Returns a JSON object containing these properties:
 
 Delete the currently logged in user's account. This requires password re-entry, for security reasons. A user cannot 
 delete themselves if they are the last admin user in the current installation's team. Once deleted the user is 
-immediately logged out, and will be unable to log back in.
+immediately logged out, and will be unable to log back in. When a user is deleted, all of their data
+is removed from the database.
 
 **Returns**
 
@@ -305,33 +306,159 @@ Resources for managing a team and it's users. These resources require user to ha
 
 ### POST http://your.trk.life.domain/api/team/users/list ###
 
-TODO
+Get a list of all of the user's in the current trk.life installation's team.
+
+**Returns**
+
+A JSON array of user objects.
+
+**Example Response**
+
+    [
+        {
+            "id": 12,
+            "email": "email@example.com",
+            "first_name": "John",
+            "last_name": "Doe",
+            "role": "user",
+            "status": "active",
+            "created": 1464897863,
+            "modified": 1465939139
+        }
+        ...
+    ]
 
 ---
 
 ### POST http://your.trk.life.domain/api/team/users/{id}/get ###
 
-TODO
+Get a single user's details.
+
+**Returns**
+
+A JSON object of the user.
+
+* user: The chosen user's details (See example response below).
+
+**Example Response**
+
+    {
+        "id": 12,
+        "email": "email@example.com",
+        "first_name": "John",
+        "last_name": "Doe",
+        "role": "user",
+        "status": "active",
+        "created": 1464897863,
+        "modified": 1465939139
+    }
 
 ---
 
 ### POST http://your.trk.life.domain/api/team/users/create ###
 
-TODO
+Create a new user in the team.
+
+**Arguments (Form data)**
+
+| Argument          | Required? | Allowed values       | Description |
+| ----------------- | --------- | -------------------- | ----------- |
+| email             | required  | *                    | The new user's email address |
+| password          | required  | *                    | The new user's password |
+| first_name        | required  | *                    | The new user's first name |
+| last_name         | required  | *                    | The new user's last name |
+| role              | required  | "admin", "user"      | The new user's role |
+| status            | required  | "active", "disabled" | The new user's status |
+
+**Returns**
+
+Returns a JSON object containing these properties:
+
+* status: Always returned, and contains either "fail" or "success".
+
+* message: Always returned, containing a user-friendly message with the failure reason or a success message.
+
+**Example Request**
+
+    email: new_user@example.com
+    password: password1
+    first_name: Mary
+    last_name: Smith
+    role: user
+    status: active
+
+**Example Response**
+
+    {
+        "status": "success",
+        "message": "Successfully created new user."
+    }
 
 ---
 
 ### POST http://your.trk.life.domain/api/team/users/{id}/update ###
 
-TODO
+Updates a user in the team. 
+
+Note: A user cannot downgrade their own role from admin to user, or change their own status from active to disabled.
+
+**Arguments (Form data)**
+
+| Argument          | Required? | Allowed values       | Description |
+| ----------------- | --------- | -------------------- | ----------- |
+| email             | required  | *                    | The user's email address |
+| password          | optional  | *                    | The user's password |
+| first_name        | required  | *                    | The user's first name |
+| last_name         | required  | *                    | The user's last name |
+| role              | required  | "admin", "user"      | The user's role |
+| status            | required  | "active", "disabled" | The user's status |
+
+Note: The password field is optional. If a password change isn't wanted, the field should either be left blank or 
+omitted completely.
+
+**Returns**
+
+Returns a JSON object containing these properties:
+
+* status: Always returned, and contains either "fail" or "success".
+
+* message: Always returned, containing a user-friendly message with the failure reason or a success message.
+
+**Example Request**
+
+    email: updated_user@example.com
+    first_name: Mary
+    last_name: Smith
+    role: user
+    status: active
+
+**Example Response**
+
+    {
+        "status": "success",
+        "message": "Successfully updated user."
+    }
 
 ---
 
 ### POST http://your.trk.life.domain/api/team/users/{id}/delete ###
 
-Note: cannot delete own user through team settings.
+Delete a user from the team. The logged in user cannot delete themselves through team settings. If logged in, the 
+deleted user will be logged out immediately and will be unable to log back in. When a user is deleted, all of their data
+is removed from the database.
 
-TODO
+**Returns**
+
+* status: Always returned, and contains either "fail" or "success".
+
+* message: Always returned, containing a user-friendly message with the failure reason or a success message.
+
+**Example Response**
+
+    {
+        "status": "success",
+        "message": "Successfully deleted user."
+    }
 
 ---
 
