@@ -128,8 +128,7 @@ Doesn't require the "Authorisation" header.
 
 Returns a JSON object containing these properties:
 
-* status: Always returned, and contains either "fail", along with a message (see below), or "success" along with the
-user object and the new token.
+* status: Always returned, and contains either "fail" or "success".
 
 * message: Always returned, containing a user-friendly message with the failure reason or a success message.
 
@@ -162,8 +161,7 @@ Resets a user's password using the link sent via email by a forgotten password r
 
 Returns a JSON object containing these properties:
 
-* status: Always returned, and contains either "fail", along with a message (see below), or "success" along with the
-user object and the new token.
+* status: Always returned, and contains either "fail" or "success".
 
 * message: Always returned, containing a user-friendly message with the failure reason or a success message.
 
@@ -187,31 +185,117 @@ Resources for managing own user.
 
 ### GET http://your.trk.life.domain/api/settings/user/get ###
 
-TODO
+Get the currently logged in user's details.
+
+**Returns**
+
+A JSON object of the user.
+
+* user: The logged in user's details (See example response below).
+
+**Example Response**
+
+    {
+        "id": 12,
+        "email": "email@example.com",
+        "first_name": "John",
+        "last_name": "Doe",
+        "role": "user",
+        "status": "active",
+        "created": 1464897863,
+        "modified": 1465939139
+    }
 
 ---
 
 ### POST http://your.trk.life.domain/api/settings/user/update ###
 
-Note: requires password entry. Cannot downgrade own user's role unless there is another admin.
+Update the currently logged in user. This requires the user's password to be sent in the request for extra security.
 
-TODO
+**Arguments (Form data)**
+
+| Argument          | Required? | Allowed values | Description |
+| ----------------- | --------- | -------------- | ----------- |
+| current_password  | required  | *              | The user's current password, used for security reasons |
+| email             | required  | *              | The user's email address |
+| first_name        | required  | *              | The user's first name |
+| last_name         | required  | *              | The user's last name |
+
+**Returns**
+
+Returns a JSON object containing these properties:
+
+* status: Always returned, and contains either "fail" or "success".
+
+* message: Always returned, containing a user-friendly message with the failure reason or a success message.
+
+**Example Request**
+
+    current_password: password2
+    email: new_email@example.com
+    first_name: Jimmy
+    last_name: Doe
+
+**Example Response**
+
+    {
+        "status": "success",
+        "message": "Successfully updated user."
+    }
 
 ---
 
 ### POST http://your.trk.life.domain/api/settings/user/change-password ###
 
-Note: requires existing password entry
+Change the currently logged in user's password. This requires the user's password to be sent in the request for extra security.
 
-TODO
+**Arguments (Form data)**
+
+| Argument          | Required? | Allowed values | Description |
+| ----------------- | --------- | -------------- | ----------- |
+| current_password  | required  | *              | The user's current password, used for security reasons |
+| new_password      | required  | *              | The user's new password |
+
+**Returns**
+
+Returns a JSON object containing these properties:
+
+* status: Always returned, and contains either "fail" or "success".
+
+* message: Always returned, containing a user-friendly message with the failure reason or a success message.
+
+**Example Request**
+
+    current_password: password2
+    new_password: password3
+
+**Example Response**
+
+    {
+        "status": "success",
+        "message": "Successfully changed password."
+    }
 
 ---
 
 ### POST http://your.trk.life.domain/api/settings/user/delete ###
 
-Note: requires password entry. Cannot delete own user if it is the last user (admin user).
+Delete the currently logged in user's account. This requires password re-entry, for security reasons. A user cannot 
+delete themselves if they are the last admin user in the current installation's team. Once deleted the user is 
+immediately logged out, and will be unable to log back in.
 
-TODO
+**Returns**
+
+* status: Always returned, and contains either "fail" or "success".
+
+* message: Always returned, containing a user-friendly message with the failure reason or a success message.
+
+**Example Response**
+
+    {
+        "status": "success",
+        "message": "Successfully deleted user."
+    }
 
 ---
 
