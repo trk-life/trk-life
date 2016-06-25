@@ -115,13 +115,13 @@ $app->post('/team/users/{id}/delete', '\TrkLife\Controller\TeamController:delete
 /**
  * Manage project routes
  */
-$app->get('/categories/create', '\TrkLife\Controller\CategoryController:create')->add($auth);
+$app->post('/categories/create', '\TrkLife\Controller\CategoryController:create')->add($auth);
 $app->post('/categories/{id}/update', '\TrkLife\Controller\CategoryController:update')->add($auth);
 $app->post('/categories/{id}/archive', '\TrkLife\Controller\CategoryController:archive')->add($auth);
-$app->get('/projects/create', '\TrkLife\Controller\ProjectController:create')->add($auth);
+$app->post('/projects/create', '\TrkLife\Controller\ProjectController:create')->add($auth);
 $app->post('/projects/{id}/update', '\TrkLife\Controller\ProjectController:update')->add($auth);
 $app->post('/projects/{id}/archive', '\TrkLife\Controller\ProjectController:archive')->add($auth);
-$app->get('/items/create', '\TrkLife\Controller\ItemController:create')->add($auth);
+$app->post('/items/create', '\TrkLife\Controller\ItemController:create')->add($auth);
 $app->post('/items/{id}/update', '\TrkLife\Controller\ItemController:update')->add($auth);
 $app->post('/items/{id}/archive', '\TrkLife\Controller\ItemController:archive')->add($auth);
 

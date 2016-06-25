@@ -6,12 +6,43 @@
 admin:
   - \TrkLife\Controller\UserController:validateToken:GET
   - \TrkLife\Controller\UserController:logout:GET
-  - \TrkLife\Controller\UserController:get:GET
-  - \TrkLife\Controller\UserController:list:GET
-  - \TrkLife\Controller\UserController:create:POST
-  - \TrkLife\Controller\UserController:update:POST
-  - \TrkLife\Controller\UserController:delete:POST
+  - \TrkLife\Controller\UserController:getCurrentUser:GET
+  - \TrkLife\Controller\UserController:updateCurrentUser:POST
+  - \TrkLife\Controller\UserController:changeCurrentUsersPassword:POST
+  - \TrkLife\Controller\UserController:deleteCurrentUser:POST
+  - \TrkLife\Controller\TeamController:listUsers:GET
+  - \TrkLife\Controller\TeamController:getUser:GET
+  - \TrkLife\Controller\TeamController:createUser:POST
+  - \TrkLife\Controller\TeamController:updateUser:POST
+  - \TrkLife\Controller\TeamController:deleteUser:POST
+  - \TrkLife\Controller\CategoryController:create:POST
+  - \TrkLife\Controller\CategoryController:update:POST
+  - \TrkLife\Controller\CategoryController:archive:POST
+  - \TrkLife\Controller\ProjectController:create:POST
+  - \TrkLife\Controller\ProjectController:update:POST
+  - \TrkLife\Controller\ProjectController:archive:POST
+  - \TrkLife\Controller\ItemController:create:POST
+  - \TrkLife\Controller\ItemController:update:POST
+  - \TrkLife\Controller\ItemController:archive:POST
+  - \TrkLife\Controller\TrackingController:getData:GET
+  - \TrkLife\Controller\TrackingController:save:POST
 
+# A standard team user's role
 user:
   - \TrkLife\Controller\UserController:validateToken:GET
   - \TrkLife\Controller\UserController:logout:GET
+  - \TrkLife\Controller\UserController:getCurrentUser:GET
+  - \TrkLife\Controller\UserController:updateCurrentUser:GET
+  - \TrkLife\Controller\UserController:changeCurrentUsersPassword:GET
+  - \TrkLife\Controller\UserController:deleteCurrentUser:GET
+  - \TrkLife\Controller\CategoryController:create:POST
+  - \TrkLife\Controller\CategoryController:update:POST
+  - \TrkLife\Controller\CategoryController:archive:POST
+  - \TrkLife\Controller\ProjectController:create:POST
+  - \TrkLife\Controller\ProjectController:update:POST
+  - \TrkLife\Controller\ProjectController:archive:POST
+  - \TrkLife\Controller\ItemController:create:POST
+  - \TrkLife\Controller\ItemController:update:POST
+  - \TrkLife\Controller\ItemController:archive:POST
+  - \TrkLife\Controller\TrackingController:getData:GET
+  - \TrkLife\Controller\TrackingController:save:POST
