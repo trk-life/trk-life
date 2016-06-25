@@ -332,7 +332,7 @@ class UserController
      */
     public function getCurrentUser(ServerRequestInterface $request, Response $response)
     {
-        // TODO
+        return $response->withJson($request->getAttribute('user')->getAttributes());
     }
 
     /**
