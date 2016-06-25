@@ -12,7 +12,7 @@ require __DIR__ . '/app/config/bootstrap.php';
 
 use TrkLife\Console\CreateUserCommand;
 use Symfony\Component\Console\Application;
-use Slim\Container;
+use TrkLife\Container;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use TrkLife\Config;
