@@ -415,7 +415,59 @@ class UserController
      */
     public function changeCurrentUsersPassword(ServerRequestInterface $request, Response $response)
     {
-        // TODO
+        $data = $request->getParsedBody();
+
+        // Get attributes from request
+        $current_password = filter_var(
+            empty($data['current_password']) ? '' : $data['current_password'], FILTER_SANITIZE_STRING
+        );
+        $new_password = filter_var(
+            empty($data['new_password']) ? '' : $data['new_password'], FILTER_SANITIZE_STRING
+        );
+
+        if (empty($current_password) || empty($new_password)) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'Please make sure all fields are complete.'
+            ));
+        }
+
+        /* @var $user User */
+        $user = $request->getAttribute('user');
+
+        // Check current password
+        if (!$user->checkPassword($current_password)) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'The current password entered is incorrect.'
+            ));
+        }
+
+        // TODO: consider logging out all existing sessions
+
+        // Update fields
+        if (!$user->set('password', $new_password)) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'New password must be at least 8 characters long.'
+            ));
+        }
+
+        // Persist
+        try {
+            $this->c->EntityManager->persist($user);
+            $this->c->EntityManager->flush();
+        } catch (\Exception $e) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'There was a problem, please try again.'
+            ));
+        }
+
+        return $response->withJson(array(
+            'status' => 'success',
+            'message' => 'Successfully changed password.'
+        ));
     }
 
     /**
