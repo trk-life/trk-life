@@ -322,4 +322,52 @@ class UserController
             'message' => 'Successfully reset password.'
         ));
     }
+
+    /**
+     * Get the currently logged in user's details
+     *
+     * @param ServerRequestInterface $request   The request object
+     * @param Response $response                The response object
+     * @return Response                         The response object
+     */
+    public function getCurrentUser(ServerRequestInterface $request, Response $response)
+    {
+        // TODO
+    }
+
+    /**
+     * Update the currently logged in user
+     *
+     * @param ServerRequestInterface $request   The request object
+     * @param Response $response                The response object
+     * @return Response                         The response object
+     */
+    public function updateCurrentUser(ServerRequestInterface $request, Response $response)
+    {
+        // TODO
+    }
+
+    /**
+     * Change the currently logged in user's password
+     *
+     * @param ServerRequestInterface $request   The request object
+     * @param Response $response                The response object
+     * @return Response                         The response object
+     */
+    public function changeCurrentUsersPassword(ServerRequestInterface $request, Response $response)
+    {
+        // TODO
+    }
+
+    /**
+     * Delete the currently logged in user
+     *
+     * @param ServerRequestInterface $request   The request object
+     * @param Response $response                The response object
+     * @return Response                         The response object
+     */
+    public function deleteCurrentUser(ServerRequestInterface $request, Response $response)
+    {
+        // TODO
+    }
 }

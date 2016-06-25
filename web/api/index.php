@@ -96,12 +96,39 @@ $app->post('/users/forgotten-password', '\TrkLife\Controller\UserController:forg
 $app->post('/users/reset-password', '\TrkLife\Controller\UserController:resetPassword');
 
 /**
- * User management routes
+ * User settings
  */
-$app->get('/users/get/{id}', '\TrkLife\Controller\UserController:get')->add($auth); // TODO
-$app->get('/users/list', '\TrkLife\Controller\UserController:list')->add($auth); // TODO
-$app->post('/users/create', '\TrkLife\Controller\UserController:create')->add($auth); // TODO
-$app->post('/users/update/{id}', '\TrkLife\Controller\UserController:update')->add($auth); // TODO
-$app->post('/users/delete/{id}', '\TrkLife\Controller\UserController:delete')->add($auth); // TODO
+$app->get('/settings/user/get', '\TrkLife\Controller\UserController:getCurrentUser')->add($auth);
+$app->post('/settings/user/update', '\TrkLife\Controller\UserController:updateCurrentUser')->add($auth);
+$app->post('/settings/user/change-password', '\TrkLife\Controller\UserController:changeCurrentUsersPassword')->add($auth);
+$app->post('/settings/user/delete', '\TrkLife\Controller\UserController:deleteCurrentUser')->add($auth);
+
+/**
+ * Team management
+ */
+$app->get('/team/users/list', '\TrkLife\Controller\TeamController:listUsers')->add($auth);
+$app->get('/team/users/{id}/get', '\TrkLife\Controller\TeamController:getUser')->add($auth);
+$app->post('/team/users/create', '\TrkLife\Controller\TeamController:createUser')->add($auth);
+$app->post('/team/users/{id}/update', '\TrkLife\Controller\TeamController:updateUser')->add($auth);
+$app->post('/team/users/{id}/delete', '\TrkLife\Controller\TeamController:deleteUser')->add($auth);
+
+/**
+ * Manage project routes
+ */
+$app->get('/categories/create', '\TrkLife\Controller\CategoryController:create')->add($auth);
+$app->post('/categories/{id}/update', '\TrkLife\Controller\CategoryController:update')->add($auth);
+$app->post('/categories/{id}/archive', '\TrkLife\Controller\CategoryController:archive')->add($auth);
+$app->get('/projects/create', '\TrkLife\Controller\ProjectController:create')->add($auth);
+$app->post('/projects/{id}/update', '\TrkLife\Controller\ProjectController:update')->add($auth);
+$app->post('/projects/{id}/archive', '\TrkLife\Controller\ProjectController:archive')->add($auth);
+$app->get('/items/create', '\TrkLife\Controller\ItemController:create')->add($auth);
+$app->post('/items/{id}/update', '\TrkLife\Controller\ItemController:update')->add($auth);
+$app->post('/items/{id}/archive', '\TrkLife\Controller\ItemController:archive')->add($auth);
+
+/**
+ * Tracking routes
+ */
+$app->get('/tracking/data', '\TrkLife\Controller\TrackingController:getData')->add($auth);
+$app->post('/tracking/save', '\TrkLife\Controller\TrackingController:save')->add($auth);
 
 $app->run();
