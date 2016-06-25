@@ -9,6 +9,8 @@ use TrkLife\Email\Email;
 use TrkLife\Entity\ForgottenPassword;
 use TrkLife\Entity\Token;
 use TrkLife\Entity\User;
+use TrkLife\Exception\ValidationException;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 /**
  * Class UserController
@@ -344,7 +346,64 @@ class UserController
      */
     public function updateCurrentUser(ServerRequestInterface $request, Response $response)
     {
-        // TODO
+        $data = $request->getParsedBody();
+
+        // Get attributes from request
+        $current_password = filter_var(
+            empty($data['current_password']) ? '' : $data['current_password'], FILTER_SANITIZE_STRING
+        );
+        $email = filter_var(empty($data['email']) ? '' : $data['email'], FILTER_SANITIZE_EMAIL);
+        $first_name = filter_var(empty($data['first_name']) ? '' : $data['first_name'], FILTER_SANITIZE_STRING);
+        $last_name = filter_var(empty($data['last_name']) ? '' : $data['last_name'], FILTER_SANITIZE_STRING);
+
+        if (empty($current_password) || empty($email) || empty($first_name) || empty($last_name)) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'Please make sure all fields are complete.'
+            ));
+        }
+
+        /* @var $user User */
+        $user = $request->getAttribute('user');
+
+        // Check current password
+        if (!$user->checkPassword($current_password)) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'The password entered is incorrect.'
+            ));
+        }
+
+        // Update fields
+        $user->set('email', $email);
+        $user->set('first_name', $first_name);
+        $user->set('last_name', $last_name);
+
+        // Persist
+        try {
+            $this->c->EntityManager->persist($user);
+            $this->c->EntityManager->flush();
+        } catch (ValidationException $e) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => implode(', ', $e->validation_messages)
+            ));
+        } catch (UniqueConstraintViolationException $e) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'Email address is already registered.'
+            ));
+        } catch (\Exception $e) {
+            return $response->withJson(array(
+                'status' => 'fail',
+                'message' => 'There was a problem, please try again.'
+            ));
+        }
+
+        return $response->withJson(array(
+            'status' => 'success',
+            'message' => 'Successfully updated user.'
+        ));
     }
 
     /**
