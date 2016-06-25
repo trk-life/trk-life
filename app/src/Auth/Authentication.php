@@ -51,7 +51,14 @@ class Authentication
 
         // Set user and token in request attribute
         $user_repository = $this->c->EntityManager->getRepository('TrkLife\Entity\User');
-        $request = $request->withAttribute('user', $user_repository->findOneById($token_entity->get('user_id')));
+        $user = $user_repository->findOneById($token_entity->get('user_id'));
+
+        // Check user exists
+        if ($user === null) {
+            return false;
+        }
+
+        $request = $request->withAttribute('user', $user);
         $request = $request->withAttribute('token_entity', $token_entity);
 
         return $request;
